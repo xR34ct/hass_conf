@@ -1,0 +1,167 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Poseidon
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 54
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Stockholm
+  #Apply random customizations
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+#introduction:
+
+#Includes
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+
+# Enables the frontend
+frontend:
+
+map:
+
+zone:
+  - name: LiU
+    latitude: 58.401641
+    longitude: 15.577524
+    radius: 500
+    icon: mdi:school
+
+  - name: Motala
+    latitude: !secret motala_lat
+    longitude: !secret motala_lon
+    icon: mdi:home-modern
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: !secret mqtt_port
+  client_id: Hass
+  keepalive: 60
+  username: !secret mqtt_user
+  password: !secret mqtt_pass
+
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: 192.168.5.2:8123
+  ssl_certificate: !secret ssl_cert
+  ssl_key: !secret ssl_key
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+sensor:
+# Weather prediction
+  - platform: yr
+    monitored_conditions:
+      - temperature
+      - humidity
+
+# LetsEncrypt
+  - platform: command_line
+    name: SSL cert expiry
+    unit_of_measurement: days
+    scan_interval: 10800
+    command: "ssl-cert-check -b -c /home/homeassistant/.homeassistant/certs/cert.pem | awk '{ print $NF }'"
+
+# Plex Activiy
+  - platform: plex
+    host: 192.168.5.2
+    username: !secret plex_user
+    password: !secret plex_pass
+
+#Current Version
+  - platform: version
+
+#Check uptime
+  - platform: uptime
+
+# Text to speech
+tts:
+  - platform: google
+
+
+input_number:
+  spotify_volume:
+    name: Volume
+    icon: mdi:volume-high
+    min: 0
+    max: 1
+    step: 0.05
+input_select:
+  spotify_playlist:
+    name: 'Playlist:'
+    options:
+      - Wildcard
+      - Youthish
+      - Fekke
+    icon: mdi:spotify
+  spotify_source:
+    name: 'Source:'
+    options:
+      - Hades
+      - Ares
+    #initial: Ares
+    icon: mdi:speaker-wireless
+
+
+device_tracker:
+  - platform: asuswrt
+    host: 192.168.5.1
+    username: !secret router_user
+    password: !secret router_pass
+    track_new_devices: false
+
+  - platform: owntracks
+    waypoints: True
+
+media_player:
+  - platform: spotify
+    client_id: !secret spotify_id
+    client_secret: !secret spotify_secret
+    cashe_path: /home/homeassistant/.homeassistant/.spotify-token-cashe
+
+notify:
+  - name: Slack
+    platform: slack
+    api_key: !secret slack_key
+    default_channel: '#anet-testing'
+    
+
+#android_ip_webcam:
+#  - host: 192.168.5.6
+
