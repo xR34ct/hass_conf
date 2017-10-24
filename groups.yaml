@@ -1,0 +1,7 @@
+music_spotify:
+  name: Music 
+  entities:
+  - input_select.spotify_playlist
+  - input_select.spotify_source
+  - script.spotify_music
+  - input_number.spotify_volume

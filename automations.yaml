@@ -1,1 +1,42 @@
-/home/homeassistant/.homeassistant/automations.yaml
+- action:
+  - data:
+      entity_id: media_player.spotify
+      source: Ares
+    service: media_player.select_source
+  - delay: '10'
+  - data:
+      entity_id: media_player.spotify
+      media_content_id: spotify:user:icehot94:playlist:44Q7We1ZcaRhIOMghcEs4a
+      media_content_type: playlist
+    service: media_player.play_media
+  - data:
+      entity_id: media_player.spotify
+    service: media_player.play_media
+  - data:
+      entity_id: media_player.spotify
+      shuffle: 'true'
+    service: media_player.shuffle_set
+  - data:
+      entity_id: media_player.spotify
+    service: media_player.media_next_track
+  alias: Spotify in ze morgen
+  condition:
+  - condition: state
+    entity_id: device_tracker.android85a4ec17ac5036a5
+    state: home
+  id: '1508734891497'
+  trigger:
+  - at: 08:30
+    platform: time
+
+- action:
+  - data_template:
+      entity_id: media_player.spotify
+      volume_level: '{{  states.input_number.spotify_volume.state  }}'
+    service: media_player.volume_set
+  alias: 'Set Spotify Volume'
+  condition: []
+  id: '14589756321469'
+  trigger:
+    platform: state
+    entity_id: input_number.spotify_volume

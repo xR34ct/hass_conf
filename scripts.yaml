@@ -1,1 +1,30 @@
-/home/homeassistant/.homeassistant/scripts.yaml
+spotify_music:
+  alias: Play selected spotify playlist
+  sequence:
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.spotify
+        volume_level: '1'
+    - service: media_player.select_source
+      data_template: 
+        entity_id: media_player.spotify
+        source: >
+         {% if is_state("input_select.spotify_source", "Ares") %} Ares
+         {% elif is_state("input_select.spotify_source", "Hades") %} HADES
+         {% endif %}
+    - service: media_player.play_media
+      data_template:
+        entity_id: media_player.spotify
+        media_content_type: playlist
+        media_content_id: >
+         {% if is_state("input_select.spotify_playlist", "Wildcard") %} spotify:user:icehot94:playlist:44Q7We1ZcaRhIOMghcEs4a
+         {% elif is_state("input_select.spotify_playlist", "Youthish") %} spotify:user:icehot94:playlist:2ZZUYCryHU5g22zaSOuAug
+         {% elif is_state("input_select.spotify_playlist", "Fekke") %} spotify:user:icehot94:playlist:08GjqXM3sL80Unlrclrptd
+         {% endif %}
+    - service: media_player.shuffle_set
+      data:
+        entity_id: media_player.spotify
+        shuffle: 'true'
+    - service: media_player.media_next_track
+      data:
+        entity_id: media_player.spotify
