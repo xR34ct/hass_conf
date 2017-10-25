@@ -22,6 +22,7 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 sensor: !include sensors.yaml
 zone: !include zones.yaml
+device_tracker: !include device_tracker.yaml
 
 # Enables the frontend
 frontend:
