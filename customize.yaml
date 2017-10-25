@@ -10,4 +10,5 @@ automation.SMS_Location:
 script.spotify_music:
   friendly_name: 'Play'
   icon: mdi:play
-
+media_player.ares:
+  google_assistant_name: 'Media Server'
