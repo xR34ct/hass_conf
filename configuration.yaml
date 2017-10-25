@@ -17,28 +17,21 @@ homeassistant:
 #introduction:
 
 #Includes
-
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
-
+sensor: !include sensors.yaml
+zone: !include zones.yaml
 
 # Enables the frontend
 frontend:
 
+#Add IFTTT functionality
+ifttt:
+  key: !secret ifttt_key
+
+#Enable map in HA
 map:
-
-zone:
-  - name: LiU
-    latitude: 58.401641
-    longitude: 15.577524
-    radius: 500
-    icon: mdi:school
-
-  - name: Motala
-    latitude: !secret motala_lat
-    longitude: !secret motala_lon
-    icon: mdi:home-modern
 
 mqtt:
   broker: !secret mqtt_broker
@@ -52,22 +45,15 @@ mqtt:
 # Enables configuration UI
 config:
 
+#Config for HA SSL and password
 http:
-  # Uncomment this to add a password (recommended!)
   api_password: !secret http_password
-  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   base_url: 192.168.5.2:8123
   ssl_certificate: !secret ssl_cert
   ssl_key: !secret ssl_key
 
 # Checks for available updates
-# Note: This component will send some information about your system to
-# the developers to assist with development of Home Assistant.
-# For more information, please see:
-# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
 updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
-  # include_used_components: true
 
 # Discover some devices automatically
 discovery:
@@ -84,45 +70,23 @@ logbook:
 # Track the sun
 sun:
 
-sensor:
-# Weather prediction
-  - platform: yr
-    monitored_conditions:
-      - temperature
-      - humidity
-
-# LetsEncrypt
-  - platform: command_line
-    name: SSL cert expiry
-    unit_of_measurement: days
-    scan_interval: 10800
-    command: "ssl-cert-check -b -c /home/homeassistant/.homeassistant/certs/cert.pem | awk '{ print $NF }'"
-
-# Plex Activiy
-  - platform: plex
-    host: 192.168.5.2
-    username: !secret plex_user
-    password: !secret plex_pass
-
-#Current Version
-  - platform: version
-
-#Check uptime
-  - platform: uptime
-
 # Text to speech
 tts:
   - platform: google
 
-
+#Sliders and input boxes
 input_number:
+#Slider for controling Spotify volume
   spotify_volume:
     name: Volume
     icon: mdi:volume-high
     min: 0
     max: 1
     step: 0.05
+    mode: slider
+
 input_select:
+#Dropdown list of Spotify playlists
   spotify_playlist:
     name: 'Playlist:'
     options:
@@ -130,6 +94,7 @@ input_select:
       - Youthish
       - Fekke
     icon: mdi:spotify
+#Dropdown list of Spotify sources
   spotify_source:
     name: 'Source:'
     options:
@@ -137,31 +102,23 @@ input_select:
       - Ares
     #initial: Ares
     icon: mdi:speaker-wireless
-
-
-device_tracker:
-  - platform: asuswrt
-    host: 192.168.5.1
-    username: !secret router_user
-    password: !secret router_pass
-    track_new_devices: false
-
-  - platform: owntracks
-    waypoints: True
-
+#Diffrent media-players
 media_player:
   - platform: spotify
     client_id: !secret spotify_id
     client_secret: !secret spotify_secret
     cashe_path: /home/homeassistant/.homeassistant/.spotify-token-cashe
 
+  - platform: plex 
+
+#Send notifications from HA to Slack and other services
 notify:
   - name: Slack
     platform: slack
     api_key: !secret slack_key
     default_channel: '#anet-testing'
     
-
+#Webcam
 #android_ip_webcam:
 #  - host: 192.168.5.6
 

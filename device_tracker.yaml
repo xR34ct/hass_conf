@@ -1,0 +1,8 @@
+- platform: asuswrt
+  host: 192.168.5.1
+  username: !secret router_user
+  password: !secret router_pass
+  track_new_devices: false
+
+- platform: owntracks
+  waypoints: True

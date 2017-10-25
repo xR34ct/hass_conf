@@ -1,0 +1,12 @@
+- name: LiU
+  latitude: 58.401641
+  longitude: 15.577524
+  radius: 500
+  icon: mdi:school
+- name: Motala
+  latitude: !secret motala_lat
+  longitude: !secret motala_lon
+  icon: mdi:home-modern
+- name: Whaleoak
+  latitude: !secret whaleoak_lat
+  longitude: !secret whaleoak_lon  
