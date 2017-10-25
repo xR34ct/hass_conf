@@ -50,8 +50,8 @@ config:
 http:
   api_password: !secret http_password
   base_url: 192.168.5.2:8123
-  ssl_certificate: !secret ssl_cert
-  ssl_key: !secret ssl_key
+#  ssl_certificate: !secret ssl_cert
+#  ssl_key: !secret ssl_key
 
 # Checks for available updates
 updater:
@@ -127,6 +127,6 @@ notify:
 
 #Google Assistant
 google_assistant:
-  project_id: 
+  project_id: !secret project_id 
   client_id: !secret google_id
-  client_token: !secret google_token
+  access_token: !secret google_token
