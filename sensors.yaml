@@ -1,0 +1,24 @@
+# Weather prediction
+- platform: yr
+  monitored_conditions:
+    - temperature
+    - humidity
+
+# LetsEncrypt
+- platform: command_line
+  name: SSL cert expiry
+  unit_of_measurement: days
+  scan_interval: 10800
+  command: "ssl-cert-check -b -c /home/homeassistant/.homeassistant/certs/cert.pem | awk '{ print $NF }'"
+
+# Plex Activiy
+- platform: plex
+  host: 192.168.5.2
+  username: !secret plex_user
+  password: !secret plex_pass
+
+#Current Version
+- platform: version
+
+#Check uptime
+- platform: uptime
