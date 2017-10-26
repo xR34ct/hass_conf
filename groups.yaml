@@ -14,7 +14,7 @@ media_players:
 
 #Views
 default_view:
-  name: 
+  name: Dionysos
   view: yes
   icon: mdi:home
   entities:
