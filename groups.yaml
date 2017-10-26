@@ -5,3 +5,16 @@ music_spotify:
   - input_select.spotify_source
   - script.spotify_music
   - input_number.spotify_volume
+
+media_players:
+  name: "Media Players"
+  entities:
+    - media_player.spotify
+    - media_player.ares
+
+media_view:
+  name: Media
+  view: yes
+  entities:
+    - group.music_spotify
+    - group.media_players
