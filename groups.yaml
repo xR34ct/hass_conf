@@ -18,3 +18,19 @@ media_view:
   entities:
     - group.music_spotify
     - group.media_players
+    - sensor.plex
+
+temp_view:
+  name: "Temperature & Humidity"
+  view: yes
+  entities:
+    - sensor.yr_humidity
+    - sensor.yr_temperature
+    - sun.sun
+
+default_view:
+  view: yes
+  icon: mdi:home
+    - sensor.current_version
+    - sensor.ssl_cert_expiry
+    - sensor.uptime

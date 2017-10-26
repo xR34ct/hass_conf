@@ -2,7 +2,7 @@ group.music_spotify:
   friendly_name: Play
   icon: mdi:play
 automation.spotify_in_ze_morgen:
-  hidden: false
+  hidden: true
 automation.set_spotify_volume:
   hidden: true
 automation.SMS_Location:
