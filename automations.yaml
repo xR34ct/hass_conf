@@ -52,3 +52,13 @@
   - entity_id: device_tracker.zeus_zeus
     platform: state
     to: Whaleoak
+- action:
+  - data:
+      message: There is a update to Homeassistant
+    service: notify.slack
+  alias: New Hass
+  condition: []
+  id: '1509009509367'
+  trigger:
+  - entity_id: updater.updater
+    platform: state
