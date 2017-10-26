@@ -19,7 +19,7 @@ default_view:
   icon: mdi:home
   entities:
     - sensor.current_version
-    - sensor.ssl_cert_expiry
+    - sensor.anet
     - sensor.uptime
 media_view:
   name: Media
