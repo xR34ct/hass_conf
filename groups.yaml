@@ -1,3 +1,4 @@
+#Groups
 music_spotify:
   name: Music 
   entities:
@@ -5,13 +6,19 @@ music_spotify:
   - input_select.spotify_source
   - script.spotify_music
   - input_number.spotify_volume
-
 media_players:
   name: "Media Players"
   entities:
     - media_player.spotify
     - media_player.ares
 
+#Views
+default_view:
+  view: yes
+  icon: mdi:home
+    - sensor.current_version
+    - sensor.ssl_cert_expiry
+    - sensor.uptime
 media_view:
   name: Media
   view: yes
@@ -19,7 +26,6 @@ media_view:
     - group.music_spotify
     - group.media_players
     - sensor.plex
-
 temp_view:
   name: "Temperature & Humidity"
   view: yes
@@ -27,10 +33,3 @@ temp_view:
     - sensor.yr_humidity
     - sensor.yr_temperature
     - sun.sun
-
-default_view:
-  view: yes
-  icon: mdi:home
-    - sensor.current_version
-    - sensor.ssl_cert_expiry
-    - sensor.uptime
