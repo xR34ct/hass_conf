@@ -21,7 +21,6 @@ default_view:
     - sensor.current_version
     - sensor.ssl_cert_expiry
     - sensor.uptime
-    - group.all_devices
 media_view:
   name: Media
   view: yes
@@ -40,6 +39,6 @@ tracker_view:
   name: Tracking
   view: yes
   entities:
-    - device_tracker.zeus_zues
+    - group.all_devices
     - zone.home
     - zone.liu
