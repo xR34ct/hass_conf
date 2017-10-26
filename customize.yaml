@@ -12,5 +12,6 @@ script.spotify_music:
   icon: mdi:play
 media_player.ares:
   google_assistant_name: 'Media Server'
-group.gods:
+group.all_devices:
+  friendly_name: Gods
   hidden: false
