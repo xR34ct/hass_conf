@@ -50,8 +50,6 @@ config:
 http:
   api_password: !secret http_password
   base_url: 192.168.5.2:8123
-#  ssl_certificate: !secret ssl_cert
-#  ssl_key: !secret ssl_key
 
 # Checks for available updates
 updater:
