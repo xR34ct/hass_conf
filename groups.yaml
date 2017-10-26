@@ -14,11 +14,14 @@ media_players:
 
 #Views
 default_view:
+  name: 
   view: yes
   icon: mdi:home
+  entities:
     - sensor.current_version
     - sensor.ssl_cert_expiry
     - sensor.uptime
+    - group.all_devices
 media_view:
   name: Media
   view: yes
