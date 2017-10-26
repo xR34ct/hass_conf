@@ -20,3 +20,21 @@
 
 #Check uptime
 - platform: uptime
+
+#Speed
+- platform: speedtest
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+#Netdata
+- platform: netdata
+  resources:
+    - memory_free
+    - memory_used
+    - system_load
+    - disk_free
+    - cpu_iowait
+    - cpu_user
+    - cpu_system

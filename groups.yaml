@@ -11,6 +11,23 @@ media_players:
   entities:
     - media_player.spotify
     - media_player.ares
+speedtest:
+  name: Speedtest
+  entities:
+  - sensor.speedtest_download
+  - sensor.speedtest_ping
+  - sensor.speedtest_upload
+
+netdata:
+  name: "Netdata Poseidon"
+  entities:
+  - sensor.netdata_cpu_iowait
+  - sensor.netdata_cpu_system
+  - sensor.netdata_cpu_user
+  - sensor.netdata_disk_free
+  - sensor.netdata_ram_free
+  - sensor.netdata_ram_used
+  - sensor.netdata_system_load
 
 #Views
 default_view:
@@ -21,6 +38,7 @@ default_view:
     - sensor.current_version
     - sensor.anet
     - sensor.uptime
+    - group.speedtest
 media_view:
   name: Media
   view: yes
@@ -42,3 +60,4 @@ tracker_view:
     - group.all_devices
     - zone.home
     - zone.liu
+    - group.netdata
