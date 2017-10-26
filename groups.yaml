@@ -36,3 +36,10 @@ temp_view:
     - sensor.yr_humidity
     - sensor.yr_temperature
     - sun.sun
+tracker_view:
+  name: Tracking
+  view: yes
+  entities:
+    - device_tracker.zeus_zues
+    - zone.home
+    - zone.liu
