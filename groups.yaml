@@ -17,6 +17,23 @@ speedtest:
   - sensor.speedtest_download
   - sensor.speedtest_ping
   - sensor.speedtest_upload
+outside_weather:
+  name: "Outside Weather"
+  entities:
+  - sensor.yr_temperature
+  - sensor.yr_symbol
+  - sensor.yr_precipitation
+  - sensor.yr_wind_speed
+  - sensor.yr_pressure
+  - sensor.yr_wind_direction
+  - sensor.yr_humidity
+  - sensor.yr_fog
+  - sensor.yr_cloudiness
+  - sensor.yr_low_clouds
+  - sensor.yr_medium_clouds
+  - sensor.yr_high_clouds
+  - sensor.yr_dewpoint_temperature
+  - sun.sun
 
 netdata:
   name: "Netdata Poseidon"
@@ -50,9 +67,7 @@ temp_view:
   name: "Temperature & Humidity"
   view: yes
   entities:
-    - sensor.yr_humidity
-    - sensor.yr_temperature
-    - sun.sun
+    - group.outside_weather
 tracker_view:
   name: Tracking
   view: yes
@@ -61,3 +76,8 @@ tracker_view:
     - zone.home
     - zone.liu
     - group.netdata
+automations_view:
+  name: Automatron
+  view: yes
+  entities:
+    - group.all_automations

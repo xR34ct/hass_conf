@@ -1,17 +1,12 @@
 group.music_spotify:
   friendly_name: Play
   icon: mdi:play
-automation.spotify_in_ze_morgen:
-  hidden: true
-automation.set_spotify_volume:
-  hidden: true
-automation.SMS_Location:
-  hidden: true
 script.spotify_music:
-  friendly_name: 'Play'
+  friendly_name: Play
   icon: mdi:play
 media_player.ares:
-  google_assistant_name: 'Media Server'
+  google_assistant_name: Media Server
 group.all_devices:
   friendly_name: Gods
+group.all_automations:
   hidden: false
