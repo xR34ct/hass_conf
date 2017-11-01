@@ -8,5 +8,6 @@ media_player.ares:
   google_assistant_name: Media Server
 group.all_devices:
   friendly_name: Gods
+  hidden: false
 group.all_automations:
   hidden: false

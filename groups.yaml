@@ -34,7 +34,6 @@ outside_weather:
   - sensor.yr_high_clouds
   - sensor.yr_dewpoint_temperature
   - sun.sun
-
 netdata:
   name: "Netdata Poseidon"
   entities:
