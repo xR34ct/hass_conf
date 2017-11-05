@@ -56,7 +56,8 @@ updater:
 
 # Discover some devices automatically
 discovery:
-
+  ignore:
+    - plex_mediaserver
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
@@ -110,7 +111,14 @@ media_player:
     client_secret: !secret spotify_secret
     cashe_path: /home/homeassistant/.homeassistant/.spotify-token-cashe
 
-  - platform: plex 
+  - platform: plex
+    entity_namespace: 'plex'
+    include_non_clients: true
+    scan_interval: 5
+    show_all_controls: true
+    use_custom_entity_ids: true
+    use_episode_art: true
+
 
 #Send notifications from HA to Slack and other services
 notify:
@@ -118,7 +126,10 @@ notify:
     platform: slack
     api_key: !secret slack_key
     default_channel: '#anet-testing'
-    
+  - name: "Notify My Android"
+    platform: nma
+    api_key: !secret nma_key
+
 #Webcam
 #android_ip_webcam:
 #  - host: 192.168.5.6

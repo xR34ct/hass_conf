@@ -11,9 +11,6 @@
     service: media_player.play_media
   - data:
       entity_id: media_player.spotify
-    service: media_player.play_media
-  - data:
-      entity_id: media_player.spotify
       shuffle: 'true'
     service: media_player.shuffle_set
   - data:
@@ -24,10 +21,11 @@
   - condition: state
     entity_id: device_tracker.zeus_zeus
     state: home
+  - after: 08:00
+    before: '12:00'
+    condition: time
   id: '1508734891497'
-  trigger:
-  - at: 09:00
-    platform: time
+  trigger: []
 - action:
   - data_template:
       entity_id: media_player.spotify
@@ -42,9 +40,8 @@
 - action:
   - alias: "Smsa att jag \xE4r framme"
     data:
-      event: At_Whaleoak
-      value1: "Framme, kan du \xF6ppna??"
-    service: ifttt.trigger
+      message: Whaleoak
+    service: notify.notify_my_android
   alias: SMS Location
   condition: []
   id: '1508958838169'
@@ -55,7 +52,7 @@
 - action:
   - data:
       message: There is a update to Homeassistant
-    service: notify.slack
+    service: notify.notify_my_android
   alias: New Hass
   condition: []
   id: '1509009509367'

@@ -10,7 +10,10 @@ media_players:
   name: "Media Players"
   entities:
     - media_player.spotify
-    - media_player.ares
+#    - media_player.ares
+    - media_player.plex_1yguhvlqxclmwdtjgdu0bdpe
+    - media_player.plex_53fbc1c6c66e1b6b_com_plexapp_android
+    - media_player.plex_tcssfnkcdifnlovntig7oqps
 speedtest:
   name: Speedtest
   entities:
@@ -21,7 +24,6 @@ outside_weather:
   name: "Outside Weather"
   entities:
   - sensor.yr_temperature
-  - sensor.yr_symbol
   - sensor.yr_precipitation
   - sensor.yr_wind_speed
   - sensor.yr_pressure
@@ -80,3 +82,4 @@ automations_view:
   view: yes
   entities:
     - group.all_automations
+    - switch.alarm
