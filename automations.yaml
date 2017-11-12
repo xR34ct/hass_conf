@@ -21,11 +21,14 @@
   - condition: state
     entity_id: device_tracker.zeus_zeus
     state: home
-  - after: 08:00
-    before: '12:00'
+  - after: 07:59
+    before: '12:01'
     condition: time
   id: '1508734891497'
-  trigger: []
+  trigger:
+  - entity_id: binary_sensor.alarm
+    platform: state
+    to: 'on'
 - action:
   - data_template:
       entity_id: media_player.spotify
@@ -51,7 +54,7 @@
     to: Whaleoak
 - action:
   - data:
-      message: There is a update to Homeassistant
+      message: There is an update to Homeassistant
     service: notify.notify_my_android
   alias: New Hass
   condition: []
@@ -59,3 +62,24 @@
   trigger:
   - entity_id: updater.updater
     platform: state
+- action:
+  - data:
+      message: You are at Whaleoak
+    service: notify.notify_my_android
+  alias: 'At Whaleoak '
+  condition: []
+  id: '1510399530731'
+  trigger:
+  - entity_id: device_tracker.zeus_zeus
+    platform: state
+    to: Whaleoak
+- action:
+  - data:
+      name: darkorange
+    service: frontend.set_theme
+  alias: Hass Color
+  condition: []
+  id: '1510513414834'
+  trigger:
+  - event: start
+    platform: homeassistant

@@ -25,7 +25,9 @@ zone: !include zones.yaml
 device_tracker: !include device_tracker.yaml
 
 # Enables the frontend
-frontend:
+frontend: !include frontend.yaml
+
+
 
 #Add IFTTT functionality
 ifttt:
@@ -133,6 +135,15 @@ notify:
 #Webcam
 #android_ip_webcam:
 #  - host: 192.168.5.6
+
+wake_on_lan:
+
+#switch:
+  #WoL
+#  - platform: wake_on_lan
+#    mac_address: !secret hades-mac
+#    host: 192.168.5.2
+#    name: Hades
 
 #Google Assistant
 google_assistant:

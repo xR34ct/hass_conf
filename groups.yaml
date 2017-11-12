@@ -74,8 +74,7 @@ tracker_view:
   view: yes
   entities:
     - group.all_devices
-    - zone.home
-    - zone.liu
+    - switch.hades
     - group.netdata
 automations_view:
   name: Automatron
