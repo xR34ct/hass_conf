@@ -23,9 +23,9 @@ script: !include scripts.yaml
 sensor: !include sensors.yaml
 zone: !include zones.yaml
 device_tracker: !include device_tracker.yaml
-
-# Enables the frontend
 frontend: !include frontend.yaml
+
+
 
 
 
@@ -138,12 +138,12 @@ notify:
 
 wake_on_lan:
 
-#switch:
+switch:
   #WoL
-#  - platform: wake_on_lan
-#    mac_address: !secret hades-mac
-#    host: 192.168.5.2
-#    name: Hades
+  - platform: wake_on_lan
+    mac_address: !secret hades-mac
+    host: 192.168.5.3
+    name: Hades
 
 #Google Assistant
 google_assistant:
