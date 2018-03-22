@@ -49,3 +49,8 @@
     - cpu_iowait
     - cpu_user
     - cpu_system
+
+#Motion
+- platform: mqtt
+  state_topic: "homeassistant/motion"
+  name: "Motion"

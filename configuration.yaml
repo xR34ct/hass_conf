@@ -26,9 +26,6 @@ device_tracker: !include device_tracker.yaml
 frontend: !include frontend.yaml
 
 
-
-
-
 #Add IFTTT functionality
 ifttt:
   key: !secret ifttt_key
@@ -36,13 +33,13 @@ ifttt:
 #Enable map in HA
 map:
 
-mqtt:
-  broker: !secret mqtt_broker
-  port: !secret mqtt_port
-  client_id: Hass
-  keepalive: 60
-  username: !secret mqtt_user
-  password: !secret mqtt_pass
+#mqtt:
+#  broker: !secret mqtt_broker
+#  port: !secret mqtt_port
+#  client_id: Hass
+#  keepalive: 60
+#  username: !secret mqtt_user
+#  password: !secret mqtt_pass
 
 
 # Enables configuration UI
@@ -58,8 +55,6 @@ updater:
 
 # Discover some devices automatically
 discovery:
-  ignore:
-    - plex_mediaserver
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
@@ -116,7 +111,7 @@ media_player:
   - platform: plex
     entity_namespace: 'plex'
     include_non_clients: true
-    scan_interval: 5
+    scan_interval: 2
     show_all_controls: true
     use_custom_entity_ids: true
     use_episode_art: true
@@ -132,9 +127,9 @@ notify:
     platform: nma
     api_key: !secret nma_key
 
-#Webcam
-#android_ip_webcam:
-#  - host: 192.168.5.6
+mqtt:
+  broker: 192.168.5.2
+  port: 1883
 
 wake_on_lan:
 
@@ -142,11 +137,29 @@ switch:
   #WoL
   - platform: wake_on_lan
     mac_address: !secret hades-mac
-    host: 192.168.5.3
-    name: Hades
+    host: Hades
+    name: "Hades"
+    turn_off: 
+      service: shell_command.turn_off_hades
+
+shell_command:
+    turn_off_hades: ssh avdag@Hades shutdown -s -t 10
 
 #Google Assistant
 google_assistant:
   project_id: !secret project_id 
   client_id: !secret google_id
   access_token: !secret google_token
+  exposed_domains:
+   - switch
+   #- light
+   #- media_player
+
+camera:
+  - platform: generic
+    name: weather
+    still_image_url: https://www.yr.no/sted/Sverige/%C3%96sterg%C3%B6tland/Link%C3%B6ping/meteogram.svg
+    content_type: 'image/svg+xml'
+#  - platform: mjpeg
+#    name: Hallway
+#    mjpeg_url: http://rollei:rolleipw@192.168.5.92/videostream.cgi?user=rollei&pwd=rolleipw&resolution=32&rate=0 

@@ -16,7 +16,7 @@
   - data:
       entity_id: media_player.spotify
     service: media_player.media_next_track
-  alias: Spotify in ze morgen
+  alias: Good morning
   condition:
   - condition: state
     entity_id: device_tracker.zeus_zeus
@@ -41,18 +41,6 @@
     platform: state
     entity_id: input_number.spotify_volume
 - action:
-  - alias: "Smsa att jag \xE4r framme"
-    data:
-      message: Whaleoak
-    service: notify.notify_my_android
-  alias: SMS Location
-  condition: []
-  id: '1508958838169'
-  trigger:
-  - entity_id: device_tracker.zeus_zeus
-    platform: state
-    to: Whaleoak
-- action:
   - data:
       message: There is an update to Homeassistant
     service: notify.notify_my_android
@@ -64,17 +52,6 @@
     platform: state
 - action:
   - data:
-      message: You are at Whaleoak
-    service: notify.notify_my_android
-  alias: 'At Whaleoak '
-  condition: []
-  id: '1510399530731'
-  trigger:
-  - entity_id: device_tracker.zeus_zeus
-    platform: state
-    to: Whaleoak
-- action:
-  - data:
       name: darkorange
     service: frontend.set_theme
   alias: Hass Color
@@ -83,3 +60,105 @@
   trigger:
   - event: start
     platform: homeassistant
+- action:
+  - data:
+      entity_id: light.living_room
+      white_value: 200
+    service: light.turn_on
+  alias: Got Home
+  condition:
+  - after: 08:00
+    before: '23:59'
+    condition: time
+  - after: sunset
+    condition: sun
+  id: '1511270584828'
+  trigger:
+  - entity_id: device_tracker.zeus_zeus
+    platform: state
+    to: home
+- action:
+  - data:
+      entity_id: light.living_room
+    service: light.turn_off
+  alias: Going Out
+  condition:
+  - after: 08:00
+    before: '23:59'
+    condition: time
+  id: '1519586676399'
+  trigger:
+  - entity_id: device_tracker.zeus_zeus
+    from: home
+    platform: state
+- action:
+  - data:
+      brightness_pct: 60
+      entity_id: light.living_room
+      kelvin: 2500
+    service: light.turn_on
+  alias: Sunset
+  condition:
+  - condition: state
+    entity_id: device_tracker.zeus_zeus
+    state: home
+  id: '1521231654786'
+  trigger:
+  - event: sunset
+    offset: -00:30:00
+    platform: sun
+- action:
+  - data:
+      entity_id: light.living_room
+      flash: long
+    service: light.turn_on
+  alias: Low battery
+  condition:
+  - condition: state
+    entity_id: device_tracker.zeus_zeus
+    state: home
+  id: '1521234495237'
+  trigger:
+  - below: '20'
+    entity_id: sensor.phonebatt
+    platform: numeric_state
+- action:
+  - data:
+      entity_id: light.living_room
+    service: light.turn_off
+  alias: Movie Time
+  condition: []
+  id: '1521562752133'
+  trigger:
+  - entity_id: media_player.ares_2
+    platform: state
+    to: playing
+  - entity_id: media_player.ares_2
+    platform: state
+    to: playing
+- action:
+  - data:
+      brightness_pct: 50
+      entity_id: light.living_room
+    service: light.turn_on
+  alias: Movie Paused/Stopped
+  condition: []
+  id: '1521580166378'
+  trigger:
+  - entity_id: media_player.ares_2
+    platform: state
+    to: paused
+  - entity_id: media_player.ares_2
+    platform: state
+    to: idle
+- action: []
+  alias: Motion
+  condition:
+  - condition: state
+    entity_id: device_tracker.zeus_zeus
+    state: away
+  id: '1521603770293'
+  trigger:
+  - entity_id: sensor.motion
+    platform: state
+    to: 'on'
