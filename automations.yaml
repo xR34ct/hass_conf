@@ -62,6 +62,7 @@
     platform: homeassistant
 - action:
   - data:
+      brightness_pct: 50
       entity_id: light.living_room
       white_value: 200
     service: light.turn_on
@@ -102,6 +103,9 @@
   - condition: state
     entity_id: device_tracker.zeus_zeus
     state: home
+  - condition: state
+    entity_id: media_player.ares_2
+    state: idle
   id: '1521231654786'
   trigger:
   - event: sunset
@@ -127,13 +131,18 @@
       entity_id: light.living_room
     service: light.turn_off
   alias: Movie Time
-  condition: []
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
   id: '1521562752133'
   trigger:
   - entity_id: media_player.ares_2
+    from: idle
     platform: state
     to: playing
   - entity_id: media_player.ares_2
+    from: paused
     platform: state
     to: playing
 - action:
@@ -142,13 +151,18 @@
       entity_id: light.living_room
     service: light.turn_on
   alias: Movie Paused/Stopped
-  condition: []
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
   id: '1521580166378'
   trigger:
   - entity_id: media_player.ares_2
+    from: playing
     platform: state
     to: paused
   - entity_id: media_player.ares_2
+    from: playing
     platform: state
     to: idle
 - action: []
@@ -160,5 +174,20 @@
   id: '1521603770293'
   trigger:
   - entity_id: sensor.motion
+    platform: state
+    to: 'on'
+- action:
+  - data:
+      entity_id: light.living_room
+      flash: long
+    service: light.turn_on
+  alias: Morpheus Signal
+  condition:
+  - condition: state
+    entity_id: device_tracker.zeus_zeus
+    state: home
+  id: '1521763621943'
+  trigger:
+  - entity_id: binary_sensor.down
     platform: state
     to: 'on'
