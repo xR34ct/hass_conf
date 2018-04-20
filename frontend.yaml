@@ -1,4 +1,8 @@
-  # extra_html_url:
+  extra_html_url:
+    - /local/custom_ui/custom-weather-card.html
+  extra_html_url_es5:
+    - /local/custom_ui/custom-weather-card.html    
+# extra_html_url:
   #   - /local/custom_ui/state-card-custom-ui.html
   themes:
     teal:

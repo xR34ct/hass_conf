@@ -64,6 +64,13 @@ history:
 # View all events in a logbook
 logbook:
 
+weather:
+  - platform: yweather
+    woeid: 897380
+
+input_boolean:
+  weather:
+
 # Track the sun
 sun:
 
@@ -114,11 +121,11 @@ media_player:
 
   - platform: plex
     entity_namespace: 'plex'
-    include_non_clients: true
+#    include_non_clients: true
     scan_interval: 1
     show_all_controls: true
-    use_custom_entity_ids: true
-    use_episode_art: true
+#    use_custom_entity_ids: false
+#    use_episode_art: true
 
 
 #Send notifications from HA to Slack and other services
@@ -130,6 +137,10 @@ notify:
   - name: "Notify My Android"
     platform: nma
     api_key: !secret nma_key
+  - name: Push
+    platform: html5
+    gcm_api_key: !secret gcm_api_key
+    gcm_sender_id: !secret gcm_sender_id
 
 mqtt:
   broker: 192.168.5.2
@@ -161,7 +172,7 @@ google_assistant:
 
 camera:
   - platform: generic
-    name: weather
+    name: yr
     still_image_url: https://www.yr.no/sted/Sverige/%C3%96sterg%C3%B6tland/Link%C3%B6ping/meteogram.svg
     content_type: 'image/svg+xml'
 #  - platform: mjpeg

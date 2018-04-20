@@ -66,11 +66,8 @@
       entity_id: light.living_room
       white_value: 200
     service: light.turn_on
-  alias: Got Home
+  alias: 'Got Home after sunset '
   condition:
-  - after: 08:00
-    before: '23:59'
-    condition: time
   - after: sunset
     condition: sun
   id: '1511270584828'
@@ -82,11 +79,11 @@
   - data:
       entity_id: light.living_room
     service: light.turn_off
+  - data:
+      entity_id: light.hallway
+    service: light.turn_off
   alias: Going Out
-  condition:
-  - after: 08:00
-    before: '23:59'
-    condition: time
+  condition: []
   id: '1519586676399'
   trigger:
   - entity_id: device_tracker.zeus_zeus
@@ -103,13 +100,9 @@
   - condition: state
     entity_id: device_tracker.zeus_zeus
     state: home
-  - condition: state
-    entity_id: media_player.ares_2
-    state: idle
   id: '1521231654786'
   trigger:
   - event: sunset
-    offset: -00:30:00
     platform: sun
 - action:
   - data:
@@ -191,3 +184,15 @@
   - entity_id: binary_sensor.down
     platform: state
     to: 'on'
+- action:
+  - data:
+      brightness_pct: 25
+      entity_id: light.hallway
+    service: light.turn_on
+  alias: 'Got Home always '
+  condition: []
+  id: '1522970955759'
+  trigger:
+  - entity_id: device_tracker.zeus_zeus
+    platform: state
+    to: home

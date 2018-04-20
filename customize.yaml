@@ -11,3 +11,10 @@ group.all_devices:
   hidden: false
 group.all_automations:
   hidden: false
+group.lights_view: {}
+group.livingroom_lights: {}
+input_boolean.weather:
+  custom_ui_state_card: custom-weather-card
+  config:
+    weather: weather.yweather
+    sun: sun.sun

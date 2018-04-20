@@ -10,8 +10,8 @@ media_players:
   name: "Media Players"
   entities:
     - media_player.spotify
-#    - media_player.ares2
-    - media_player.plex_web_chrome
+    - media_player.ares_2
+#    - media_player.plex_web_chrome
 speedtest:
   name: Speedtest
   entities:
@@ -34,6 +34,11 @@ outside_weather:
   - sensor.yr_high_clouds
   - sensor.yr_dewpoint_temperature
   - sun.sun
+forecast:
+  name: Weather Forecast
+  view: no
+  entities:
+      - input_boolean.weather
 netdata:
   name: "Netdata Poseidon"
   entities:
@@ -44,12 +49,20 @@ netdata:
   - sensor.netdata_ram_free
   - sensor.netdata_ram_used
   - sensor.netdata_system_load
-
 motion:
   name: Motion Detection
   control: hidden
   entities:
     - sensor.motion
+livingroom_lights:
+  name: "Livingroom"
+  entities:
+  - light.top
+  - light.bottom
+hallway_lights:
+  name: "Hallway"
+  entities:
+  - light.hue_white_lamp_1
 
 #Views
 default_view:
@@ -74,7 +87,8 @@ temp_view:
   view: yes
   entities:
     - group.outside_weather
-    - camera.weather
+    - camera.yr
+    - group.forecast
 tracker_view:
   name: Tracking
   view: yes
@@ -87,8 +101,8 @@ lights_view:
   name: Lights
   view: yes
   entities:
-    - light.top
-    - light.bottom
+    - group.livingroom_lights
+    - group.hallway_lights
 automations_view:
   name: Automatron
   view: yes

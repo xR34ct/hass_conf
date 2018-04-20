@@ -21,10 +21,10 @@
   name: ANet
 
 # Plex Activiy
-- platform: plex
-  host: 192.168.5.2
-  username: !secret plex_user
-  password: !secret plex_pass
+#- platform: plex
+#  host: 192.168.5.2
+#  username: !secret plex_user
+#  password: !secret plex_pass
 
 #Current Version
 - platform: version
