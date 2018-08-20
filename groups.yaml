@@ -12,6 +12,20 @@ media_players:
     - media_player.spotify
     - media_player.ares_2
 #    - media_player.plex_web_chrome
+living_room_stuff:
+  name: "Living Room"
+  entities:
+    - sensor.living_room_motion
+    - sensor.living_room_light
+    - sensor.living_room_temperature
+    - group.livingroom_lights
+hallway_stuff:
+  name: "Hallway"
+  entities:
+    - sensor.hallway_motion
+    - sensor.hallway_light
+    - sensor.hallway_temperature
+    - group.hallway_lights
 speedtest:
   name: Speedtest
   entities:
@@ -42,18 +56,24 @@ forecast:
 netdata:
   name: "Netdata Poseidon"
   entities:
-  - sensor.netdata_cpu_iowait
-  - sensor.netdata_cpu_system
-  - sensor.netdata_cpu_user
-  - sensor.netdata_disk_free
-  - sensor.netdata_ram_free
-  - sensor.netdata_ram_used
-  - sensor.netdata_system_load
-motion:
-  name: Motion Detection
-  control: hidden
-  entities:
-    - sensor.motion
+  - sensor.netdata_4k__hdr
+  - sensor.netdata_boot_drive
+  - sensor.netdata_server
+  - sensor.netdata_iowait_
+  - sensor.netdata_load_15
+  - sensor.netdata_free_ram
+#- sensor.netdata_cpu_iowait
+#  - sensor.netdata_cpu_system
+#  - sensor.netdata_cpu_user
+#  - sensor.netdata_disk_free
+#  - sensor.netdata_ram_free
+#  - sensor.netdata_ram_used
+#  - sensor.netdata_system_load
+#motion:
+#  name: Motion Detection
+#  control: hidden
+#  entities:
+#    - sensor.motion
 livingroom_lights:
   name: "Livingroom"
   entities:
@@ -75,6 +95,8 @@ default_view:
     - sensor.uptime
     - group.speedtest
     - updater.updater
+#   - sensor.hallway_temperature
+#   - sensor.hallway_light
 media_view:
   name: Media
   view: yes
@@ -97,12 +119,22 @@ tracker_view:
     - switch.hades
     - group.netdata
     - camera.hallway
-lights_view:
-  name: Lights
+#lights_view:
+#  name: Lights
+#  view: yes
+#  entities:
+#    - group.livingroom_lights
+#    - group.hallway_lights
+livingroom_view:
+  name: "Living Room"
   view: yes
   entities:
-    - group.livingroom_lights
-    - group.hallway_lights
+    - group.living_room_stuff
+Hallway_view:
+  name: "Hallway"
+  view: yes
+  entities:
+    - group.hallway_stuff
 automations_view:
   name: Automatron
   view: yes

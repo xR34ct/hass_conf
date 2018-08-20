@@ -134,9 +134,9 @@ notify:
     platform: slack
     api_key: !secret slack_key
     default_channel: '#anet-testing'
-  - name: "Notify My Android"
-    platform: nma
-    api_key: !secret nma_key
+#  - name: "Notify My Android"
+#    platform: nma
+#    api_key: !secret nma_key
   - name: Push
     platform: html5
     gcm_api_key: !secret gcm_api_key
@@ -165,6 +165,7 @@ google_assistant:
   project_id: !secret project_id 
   client_id: !secret google_id
   access_token: !secret google_token
+  api_key: !secret google_api_key
   exposed_domains:
    - switch
    #- light

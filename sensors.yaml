@@ -42,15 +42,69 @@
 #Netdata
 - platform: netdata
   resources:
-    - memory_free
-    - memory_used
-    - system_load
-    - disk_free
-    - cpu_iowait
-    - cpu_user
-    - cpu_system
+#    system.cpu:
+#      element: system
+#      name: System
+#    system.cpu:
+#      element: user
+#      name: User
+    system.cpu:
+      element: iowait
+      name: IOWait
+    system.load:
+      element: load15
+      name: "Load 15"
+    system.ram:
+      element: free
+      name: "Free RAM"
+#    system.ram:
+#      element: used
+    disk_space._:
+      element: avail
+      name: "Boot Drive"
+    disk_space._media_4khdr:
+      element: avail
+      name: "4K & HDR"
+    disk_space._media_srv:
+      element: avail
+      name: "Server"
 
-#Motion
-- platform: mqtt
-  state_topic: "homeassistant/motion"
-  name: "Motion"
+#    - memory_free
+#    - memory_used
+#    - system_load
+#    - disk_free
+#    - cpu_iowait
+#    - cpu_user
+#    - cpu_system
+
+#Hue
+- platform: rest
+  resource: !secret hallway_temp
+  value_template: '{{ value_json.state.temperature | float / 100 }}'
+  unit_of_measurement: °C
+  name: 'Hallway Temperature'
+- platform: rest
+  resource: !secret hallway_lux
+  value_template: '{{ value_json.state.lightlevel }}'
+  unit_of_measurement: Lux
+  name: 'Hallway Light'
+- platform: rest
+  resource: !secret hallway_motion
+  value_template: '{{ value_json.state.status }}'
+  name: 'Hallway Motion'
+  scan_interval: 1
+- platform: rest
+  resource: !secret livingroom_temp
+  value_template: '{{ value_json.state.temperature | float / 100 }}'
+  unit_of_measurement: °C
+  name: 'Living Room Temperature'
+- platform: rest
+  resource: !secret livingroom_lux
+  value_template: '{{ value_json.state.lightlevel }}'
+  unit_of_measurement: Lux
+  name: 'Living Room Light'
+- platform: rest
+  resource: !secret livingroom_motion
+  value_template: '{{ value_json.state.status }}'
+  name: 'Living Room Motion'
+  scan_interval: 1
