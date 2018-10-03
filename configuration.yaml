@@ -12,6 +12,10 @@ homeassistant:
   time_zone: Europe/Stockholm
   #Apply random customizations
   customize: !include customize.yaml
+  whitelist_external_dirs:
+    - /home/xr34ct/scripts/misc/data
+    - /etc/avdagic.net/pics
+  
 
 # Show links to resources in log and frontend
 #introduction:
@@ -66,7 +70,7 @@ logbook:
 
 weather:
   - platform: yweather
-    woeid: 897380
+#    woeid: 897380
 
 input_boolean:
   weather:
@@ -179,3 +183,5 @@ camera:
 #  - platform: mjpeg
 #    name: Hallway
 #    mjpeg_url: http://rollei:rolleipw@192.168.5.92/videostream.cgi?user=rollei&pwd=rolleipw&resolution=32&rate=0 
+
+

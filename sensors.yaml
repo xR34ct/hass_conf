@@ -14,6 +14,9 @@
       - mediumClouds
       - highClouds
       - dewpointTemperature
+- platform: file
+  file_path: /scripts/misc/data/season.txt
+  name: Season
 
 #Check remaining dayts on certificate
 - platform: cert_expiry
@@ -42,32 +45,32 @@
 #Netdata
 - platform: netdata
   resources:
-#    system.cpu:
-#      element: system
-#      name: System
-#    system.cpu:
-#      element: user
-#      name: User
-    system.cpu:
+    "System CPU":
+      data_group: system.cpu
+      element: system
+    "IOWait":
+      data_group: system.cpu
       element: iowait
-      name: IOWait
-    system.load:
-      element: load15
-      name: "Load 15"
-    system.ram:
-      element: free
-      name: "Free RAM"
+    "User":
+       data_group: system.cpu:
+       element: user
+#    system.load:
+#      element: load15
+#      name: "Load 15"
+#    system.ram:
+#      element: free
+#      name: "Free RAM"
 #    system.ram:
 #      element: used
-    disk_space._:
-      element: avail
-      name: "Boot Drive"
-    disk_space._media_4khdr:
-      element: avail
-      name: "4K & HDR"
-    disk_space._media_srv:
-      element: avail
-      name: "Server"
+#    disk_space._:
+#      element: avail
+#      name: "Boot Drive"
+#    disk_space._media_4khdr:
+#      element: avail
+#      name: "4K & HDR"
+#    disk_space._media_srv:
+#      element: avail
+#      name: "Server"
 
 #    - memory_free
 #    - memory_used
@@ -92,7 +95,7 @@
   resource: !secret hallway_motion
   value_template: '{{ value_json.state.status }}'
   name: 'Hallway Motion'
-  scan_interval: 1
+  scan_interval: 0.1
 - platform: rest
   resource: !secret livingroom_temp
   value_template: '{{ value_json.state.temperature | float / 100 }}'
@@ -107,4 +110,5 @@
   resource: !secret livingroom_motion
   value_template: '{{ value_json.state.status }}'
   name: 'Living Room Motion'
-  scan_interval: 1
+  scan_interval: 0.1
+  

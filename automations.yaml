@@ -67,7 +67,7 @@
     platform: state
     to: '1'
   condition:
-  - after: 06:00
+  - after: 07:00
     before: '23:00'
     condition: time
   action:
@@ -153,7 +153,7 @@
     to: '1'
   condition:
   - after: '23:00'
-    before: 06:00
+    before: 07:00
     condition: time
   action:
   - data:
@@ -177,12 +177,12 @@
 - id: '1534792238847'
   alias: Living Room - Late Night Motion
   trigger:
-  - entity_id: automation.living_room__motion
+  - entity_id: sensor.living_room_motion
     platform: state
     to: '1'
   condition:
   - after: '23:00'
-    before: 06:00
+    before: 07:00
     condition: time
   action:
   - data:
@@ -194,11 +194,35 @@
   alias: Living Room - Turn off
   trigger:
   - entity_id: sensor.living_room_motion
-    platform: state
-    to: '0'
     for:
       minutes: 20
+    platform: state
+    to: '0'
   action:
   - data:
       entity_id: light.living_room
     service: light.turn_off
+- id: '1538468416706'
+  alias: Season Changer
+  trigger:
+  - entity_id: sensor.season
+    from: Winter
+    platform: state
+    to: Spring
+  - entity_id: sensor.season
+    from: Spring
+    platform: state
+    to: Summer
+  - entity_id: sensor.season
+    from: Summer
+    platform: state
+    to: Fall
+  - entity_id: sensor.season
+    from: Fall
+    platform: state
+    to: Winter
+  condition: []
+  action:
+  - data:
+      message: The seasons have changed!
+    service: notify.slack

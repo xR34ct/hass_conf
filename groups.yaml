@@ -18,14 +18,17 @@ living_room_stuff:
     - sensor.living_room_motion
     - sensor.living_room_light
     - sensor.living_room_temperature
-    - group.livingroom_lights
+#    - group.livingroom_lights
+    - light.top
+    - light.bottom
 hallway_stuff:
   name: "Hallway"
   entities:
     - sensor.hallway_motion
     - sensor.hallway_light
     - sensor.hallway_temperature
-    - group.hallway_lights
+#    - group.hallway_lights
+    - light.hallway
 speedtest:
   name: Speedtest
   entities:
@@ -48,6 +51,7 @@ outside_weather:
   - sensor.yr_high_clouds
   - sensor.yr_dewpoint_temperature
   - sun.sun
+  - sensor.season
 forecast:
   name: Weather Forecast
   view: no

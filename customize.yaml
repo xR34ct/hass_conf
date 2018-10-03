@@ -18,3 +18,39 @@ input_boolean.weather:
   config:
     weather: weather.yweather
     sun: sun.sun
+sensor.yr_temperature:
+  friendly_name: Temperature
+sensor.yr_precipitation:
+  friendly_name: Precipitation
+sensor.yr_wind_speed:
+  friendly_name: Speed
+sensor.yr_pressure:
+  friendly_name: Pressure
+sensor.yr_wind_direction:
+  friendly_name: Direction
+sensor.yr_humidity:
+  friendly_name: Humidity
+sensor.yr_fog:
+  friendly_name: Fog
+sensor.yr_cloudiness:
+  friendly_name: Cloudiness
+sensor.yr_low_clouds:
+  friendly_name: Low Clouds
+sensor.yr_medium_clouds:
+  friendly_name: Medium Clouds
+sensor.yr_high_clouds:
+  friendly_name: High Clouds
+sensor.yr_dewpoint_temperatur:
+  friendly_name: Dewpoint
+sensor.netdata_4k__hdr:
+  friendly_name: 4K & HDR
+sensor.netdata_boot_drive:
+  friendly_name: Boot
+sensor.netdata_free_ram:
+  friendly_name: Free RAM
+sensor.netdata_iowait:
+  friendly_name: IOWait
+sensor.netdata_load_15:
+  friendly_name: Load 15
+sensor.netdata_server:
+  friendly_name: Cloud

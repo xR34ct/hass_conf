@@ -1,0 +1,213 @@
+title: ANet Homeassistant
+# Include external resources
+resources:
+#  - url: /local/my-custom-card.js
+#    type: js
+#  - url: /local/my-webfont.css
+#    type: css
+  - url: /local/custom_ui/weather-card.js
+    type: js
+
+#background: center / cover no-repeat url("/background.png") fixed
+
+views:
+  - title: Home
+    id: Home
+    background: radial-gradient(crimson, skyblue)
+    theme: dark-mode
+    cards:
+      - type: glance
+        entities:
+          - sensor.current_version
+          - sensor.anet
+          - sensor.uptime
+          - updater.updater
+          - entity: sensor.phonebatt
+            name: Apollo
+          - entity: sensor.watchbatt
+            name: Chronos
+    #  - type: glance  
+    #    entities:
+    #      - sensor.speedtest_download
+    #      - sensor.speedtest_ping
+    #      - sensor.speedtest_upload
+      
+      - type: picture-elements
+        image: /local/lovelace/Home/isp_4.png
+        #title: Internet
+        elements:
+        - type: state-icon
+          entity: sensor.speedtest_ping
+          style:
+            top: 85%
+            left: 25%
+                
+        - type: state-label 
+          entity: sensor.speedtest_ping
+          prefix: "Internet : " 
+          style:
+            top: 93%
+            left: 20%
+            font-size: 115%
+            font-weight: bold
+                
+        - type: state-icon
+          entity: sensor.speedtest_download
+          style:
+            top: 85%
+            left: 50%
+                
+        - type: state-label 
+          entity: sensor.speedtest_download
+          style:
+            top: 93%
+            left: 50%
+            font-size: 115%
+            font-weight: bold
+                
+        - type: state-icon
+          entity: sensor.speedtest_upload
+          style:
+            top: 85%
+            left: 75%
+               
+        - type: state-label 
+          entity: sensor.speedtest_upload
+          style:
+            top: 93%
+            left: 75%
+            font-size: 115%
+            font-weight: bold
+                
+  - icon: mdi:sofa
+    title: Living Room
+    cards:
+      - type: glance
+        title: Living Room
+        entities:
+          - entity: sensor.living_room_motion
+            name: Motion
+          - entity: sensor.living_room_light
+            name: Light Level
+          - entity: sensor.living_room_temperature
+            name: Temperature
+            
+      - type: glance
+        title: Hallway
+        entities:
+          - entity: sensor.hallway_motion
+            name: Motion
+          - entity: sensor.hallway_light
+            name: Light Level
+          - entity: sensor.hallway_temperature
+            name: Temperature
+          
+      - type: glance
+        title: Lights
+        entities: 
+          - entity: light.top
+            icon: mdi:power
+            name: Top
+          - entity: light.bottom
+            icon: mdi:power
+            name: Bottom
+          - entity: light.hue_white_lamp_1
+            icon: mdi:power
+            name: Hallway
+        show_header_toggle: false        
+          
+  - icon: mdi:play-pause
+    title: Media
+    cards:
+      - type: entities
+        title: Spotify
+        entities:
+          - input_select.spotify_playlist
+          - input_select.spotify_source
+          - script.spotify_music
+          - input_number.spotify_volume
+          
+      - type: media-control
+        entity: media_player.spotify
+        
+      - type: media-control
+        entity: media_player.ares
+               
+  - icon: mdi:temperature-celsius
+    # Title of the view. Will be used as the tooltip for tab icon
+    title: Temperature
+    cards:
+        # Entities card will take a list of entities and show their state.
+      - type: glance
+        # Title of the entities card
+        title: Outside Weather Data
+        # The entities here will be shown in the same order as specified.
+        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - sensor.yr_temperature
+          - sensor.yr_precipitation
+          #- sensor.yr_wind_speed
+          - sensor.yr_pressure
+          #- sensor.yr_wind_direction
+          - sensor.yr_humidity
+          - sensor.yr_fog
+          - sensor.yr_cloudiness
+          #- sensor.yr_low_clouds
+          #- sensor.yr_medium_clouds
+          #- sensor.yr_high_clouds
+          - sensor.yr_dewpoint_temperature
+          - sun.sun
+          - sensor.season
+          
+    #  - type: weather-forecast
+    #    entity: weather.yweather
+    #    title: Forecast
+      
+      - type: 'custom:weather-card'
+        entity_weather: weather.yweather
+        entity_sun: sun.sun
+        
+      - type: picture
+        image: https://www.yr.no/sted/Sverige/%C3%96sterg%C3%B6tland/Link%C3%B6ping/meteogram.svg
+        
+  - icon: mdi:server-network
+    title: Server info
+    cards:
+      #- type: entities
+      #  title: Netdata
+      #  entities:
+      #    - sensor.netdata_4k__hdr
+      #    - sensor.netdata_boot_drive
+      #    - sensor.netdata_server
+      #    - sensor.netdata_iowait_
+      #    - sensor.netdata_load_15
+      #    - sensor.netdata_free_ram
+          
+      - type: entities
+        title: Gods
+        entities:
+          - device_tracker.zeus_zeus
+          - device_tracker.hades
+          - device_tracker.poseidon
+          - device_tracker.hermes
+  
+        
+      - type: entities
+        entities: 
+          - entity: switch.hades
+            icon: mdi:desktop-classic
+        title: Wake on LAN
+        show_header_toggle: false
+      - type: iframe
+        url: https://avdagic.net/monitor
+        aspect_ratio: 100%
+        
+  - icon: mdi:home
+    title: Automatron
+    cards:
+      - type: glance
+        title: All automations
+        entities:
+          - group.all_automations
+        
+        
