@@ -78,6 +78,14 @@ views:
             left: 75%
             font-size: 115%
             font-weight: bold
+            
+      - type: entities
+        title: Alarm Primer
+        entities: 
+          - entity: input_datetime.input_time
+            name: Alarm Time
+          - input_boolean.alarmstatus
+        show_header_toggle: false
                 
   - icon: mdi:sofa
     title: Living Room
@@ -125,13 +133,14 @@ views:
           - input_select.spotify_playlist
           - input_select.spotify_source
           - script.spotify_music
+          - input_boolean.spotify_shuffle
           - input_number.spotify_volume
           
       - type: media-control
         entity: media_player.spotify
         
       - type: media-control
-        entity: media_player.ares
+        entity: media_player.shield
                
   - icon: mdi:temperature-celsius
     # Title of the view. Will be used as the tooltip for tab icon

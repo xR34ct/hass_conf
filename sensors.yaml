@@ -43,17 +43,17 @@
     - upload
 
 #Netdata
-- platform: netdata
-  resources:
-    "System CPU":
-      data_group: system.cpu
-      element: system
-    "IOWait":
-      data_group: system.cpu
-      element: iowait
-    "User":
-       data_group: system.cpu:
-       element: user
+#- platform: netdata
+#  resources:
+#    "System CPU":
+#      data_group: system.cpu
+#      element: system
+#    "IOWait":
+#      data_group: system.cpu
+#      element: iowait
+#    "User":
+#       data_group: system.cpu:
+#       element: user
 #    system.load:
 #      element: load15
 #      name: "Load 15"
@@ -112,3 +112,30 @@
   name: 'Living Room Motion'
   scan_interval: 0.1
   
+#Spotify
+- platform: template
+  sensors:
+    spotify_volume:
+      friendly_name: "Spotify Volume"
+      value_template: "{{ states.media_player.spotify.attributes.volume_level }}"
+- platform: template
+  sensors:
+    spotify_shuffle:
+      friendly_name: "Spotify Shuffle"
+      value_template: "{{ states.media_player.spotify.attributes.shuffle }}"
+- platform: template
+  sensors:
+    spotify_source:
+      friendly_name: "Spotify Source"
+      value_template: "{{ states.media_player.spotify.attributes.source }}"
+      
+#Alarm
+- platform: template
+  sensors:
+    alarm_time:
+      friendly_name: 'Time'
+      value_template: '{{ states.input_slider.alarm_time_h.state }}:{{ states.input_slider.alarm_time_m.state }}'
+#Time Sensor      
+- platform: time_date
+  display_options:
+  - 'time'

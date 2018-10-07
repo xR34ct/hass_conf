@@ -1,7 +1,17 @@
-- action:
+- id: '1508734891497'
+  alias: Good morning
+  trigger:
+  - entity_id: binary_sensor.alarm
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.zeus_zeus
+    state: home
+  action:
   - data:
       entity_id: media_player.spotify
-      source: Ares
+      source: Shield
     service: media_player.select_source
   - delay: '10'
   - data:
@@ -16,30 +26,9 @@
   - data:
       entity_id: media_player.spotify
     service: media_player.media_next_track
-  alias: Good morning
-  condition:
-  - condition: state
-    entity_id: device_tracker.zeus_zeus
-    state: home
-  - after: 07:59
-    before: '12:01'
-    condition: time
-  id: '1508734891497'
-  trigger:
-  - entity_id: binary_sensor.alarm
-    platform: state
-    to: 'on'
-- action:
-  - data_template:
-      entity_id: media_player.spotify
-      volume_level: '{{  states.input_number.spotify_volume.state  }}'
-    service: media_player.volume_set
-  alias: Set Spotify Volume
-  condition: []
-  id: '14589756321469'
-  trigger:
-    platform: state
-    entity_id: input_number.spotify_volume
+  - data:
+      entity_id: switch.hades
+    service: switch.turn_on
 - id: '1509009509367'
   alias: New Hass
   trigger:
@@ -226,3 +215,98 @@
   - data:
       message: The seasons have changed!
     service: notify.slack
+- id: '1535465419796'
+  alias: Spotify Volume (Set)
+  trigger:
+  - platform: state
+    entity_id: input_number.spotify_volume
+  action:
+  - service: media_player.volume_set
+    data_template:
+      entity_id: media_player.spotify
+      volume_level: '{{  states.input_number.spotify_volume.state | int / 100  }}'
+- id: '1538465419706'
+  alias: Spotify Volume (Sync)
+  trigger:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id: sensor.spotify_volume
+  action:
+  - delay: 5
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.spotify_volume
+      value: '{{  states.sensor.spotify_volume.state | float | round(2) * 100  }}'
+- id: '1536468406706'
+  alias: Spotify Shuffle (Set)
+  trigger:
+  - platform: state
+    entity_id: input_boolean.spotify_shuffle
+  action:
+  - service: media_player.shuffle_set
+    data_template:
+      entity_id: media_player.spotify
+      shuffle: '{% if is_state(''input_boolean.spotify_shuffle'', ''off'') %}  false
+        {% elif is_state(''input_boolean.spotify_shuffle'', ''on'') %} true {% endif
+        %}
+
+        '
+- id: '1538464416707'
+  alias: Spotify Shuffle (Sync)
+  trigger:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id: sensor.spotify_shuffle
+  action:
+  - delay: 5
+  - service_template: "{% if states.sensor.spotify_shuffle.state == 'False' %}\n \
+      \ input_boolean.turn_off\n{% else %}\n  input_boolean.turn_on\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.spotify_shuffle
+- id: '1538468416706'
+  alias: Spotify Source (Sync)
+  trigger:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id: sensor.spotify_source
+  action:
+  - service: input_select.select_option
+    entity_id: input_select.spotify_source
+    data_template:
+      option: '{{  states.sensor.spotify_source.state  }}'
+- id: '1538268416766'
+  alias: Alarm
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (states.input_datetime.input_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+  - condition: state
+    entity_id: input_boolean.alarmstatus
+    state: 'on'
+  action:
+  - data:
+      entity_id: switch.hades
+    service: switch.toggle
+  - wait_template: "{{ is_state('device_tracker.hades', 'home') }}"
+    timeout: '00:05:00'
+    continue_on_timeout: 'false'
+  - data:
+      entity_id: media_player.spotify
+      source: HADES
+    service: media_player.select_source
+  - data:
+      entity_id: media_player.spotify
+      shuffle: 'true'
+    service: media_player.shuffle_set
+  - data:
+      entity_id: media_player.spotify
+      volume_level: '1'
+    service: media_player.volume_set
+  - data:
+      entity_id: media_player.spotify
+      media_content_id: spotify:user:icehot94:playlist:2ZZUYCryHU5g22zaSOuAug
+      media_content_type: playlist
+    service: media_player.play_media
