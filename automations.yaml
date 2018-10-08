@@ -38,7 +38,7 @@
   action:
   - data:
       message: There is an update to Homeassistant
-    service: notify.slack
+    service: notify.pushbullet
 - id: '1510513414834'
   alias: Hass Color
   trigger:
@@ -214,7 +214,7 @@
   action:
   - data:
       message: The seasons have changed!
-    service: notify.slack
+    service: notify.pushbullet
 - id: '1535465419796'
   alias: Spotify Volume (Set)
   trigger:
@@ -288,14 +288,8 @@
     state: 'on'
   action:
   - data:
-      entity_id: switch.hades
-    service: switch.toggle
-  - wait_template: "{{ is_state('device_tracker.hades', 'home') }}"
-    timeout: '00:05:00'
-    continue_on_timeout: 'false'
-  - data:
       entity_id: media_player.spotify
-      source: HADES
+      source: Ares
     service: media_player.select_source
   - data:
       entity_id: media_player.spotify

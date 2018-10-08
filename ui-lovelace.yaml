@@ -195,10 +195,10 @@ views:
       - type: entities
         title: Gods
         entities:
-          - device_tracker.zeus_zeus
+          - device_tracker.zeus
           - device_tracker.hades
           - device_tracker.poseidon
-          - device_tracker.hermes
+        #  - device_tracker.hermes
   
         
       - type: entities

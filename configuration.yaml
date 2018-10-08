@@ -98,22 +98,6 @@ input_number:
     min: 0
     max: 100
     step: 1
-  alarm_time_h:
-    name: Hour
-    icon: mdi:timer
-    initial: 0
-    min: 0
-    max: 23
-    unit_of_measurement: h
-    mode: box
-  alarm_time_m:
-    name: Minute
-    icon: mdi:timer
-    initial: 0
-    min: 0
-    max: 59
-    unit_of_measurement: min
-    mode: box
     
 #Dropdown lists
 input_select:
@@ -161,13 +145,13 @@ notify:
     platform: slack
     api_key: !secret slack_key
     default_channel: '#anet-testing'
-#  - name: "Notify My Android"
-#    platform: nma
-#    api_key: !secret nma_key
-  - name: Push
-    platform: html5
-    gcm_api_key: !secret gcm_api_key
-    gcm_sender_id: !secret gcm_sender_id
+  - name: Pushbullet
+    platform: pushbullet
+    api_key: !secret pushbullet_api
+#  - name: Push
+#    platform: html5
+#    gcm_api_key: !secret gcm_api_key
+#    gcm_sender_id: !secret gcm_sender_id
 
 mqtt:
   broker: 192.168.5.2
