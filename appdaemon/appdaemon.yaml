@@ -1,0 +1,18 @@
+secrets: /hass/secrets.yaml
+log:
+  accessfile: /hass/appdaemon/appdaemon_access.log
+  errorfile: /hass/appdaemon/appdaemon_error.log
+  logfile: /hass/appdaemon/appdaemon.log
+  log_generations: 3
+  log_size: 1000000
+appdaemon:
+  threads: 10
+  api_port: 8124
+  api_key: !secret appdaemon_api
+  plugins:
+    HASS:
+      type: hass
+      ha_url: http://192.168.5.2:8123
+#      ha_key: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIzODMzNDk2ZjM2NDE0ODJkYWQyMzZjMDI4ZmEwMDI0NSIsImlhdCI6MTUzOTAzMDU5NywiZXhwIjoxODU0MzkwNTk3fQ.8t6NFsUba4C3Fvw6MZmOe4cCvbn2qpBqLfa36Q81asA"  
+      ha_key: !secret http_password
+  app_dir: /hass/appdaemon/apps/

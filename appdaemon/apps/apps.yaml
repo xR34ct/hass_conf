@@ -1,0 +1,6 @@
+hello_world:
+  module: hello
+  class: HelloWorld
+update:
+  module: new_hass
+  class: HassUpdate
