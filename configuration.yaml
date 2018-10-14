@@ -174,8 +174,8 @@ shell_command:
 #Google Assistant
 google_assistant:
   project_id: !secret project_id 
-  client_id: !secret google_id
-  access_token: !secret google_token
+  #client_id: !secret google_id
+  #access_token: !secret google_token
   api_key: !secret google_api_key
   exposed_domains:
    - switch

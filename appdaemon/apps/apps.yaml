@@ -1,6 +1,48 @@
-hello_world:
-  module: hello
-  class: HelloWorld
 update:
   module: new_hass
   class: HassUpdate
+livingroom_day:
+  module: motion
+  class: Motion
+  sensor: sensor.living_room_motion
+  entity_id: light.living_room
+  constrain_start_time: '07:00:00'
+  constrain_end_time: '22:59:59'
+  delay: 900
+  dim_delay: 300
+  brightness_pct: 50
+  dim_brightness_pct: 25
+hallway_day:
+  module: motion
+  class: Motion
+  sensor: sensor.hallway_motion
+  entity_id: light.hallway
+  constrain_start_time: '07:00:00'
+  constrain_end_time: '22:59:59'
+  delay: 60
+  dim_delay: 0
+  brightness_pct: 50
+  dim_brightness_pct: 50
+livingroom_night:
+  module: motion
+  class: Motion
+  sensor: sensor.living_room_motion
+  entity_id: light.living_room
+  constrain_start_time: '23:00:00'
+  constrain_end_time: '06:59:59'
+  delay: 900
+  dim_delay: 300
+  brightness_pct: 5
+  dim_brightness_pct: 5
+hallway_night:
+  module: motion
+  class: Motion
+  sensor: sensor.hallway_motion
+  entity_id: light.hallway
+  constrain_start_time: '23:00:00'
+  constrain_end_time: '06:59:59'
+  delay: 60
+  dim_delay: 0
+  brightness_pct: 25
+  dim_brightness_pct: 25
+  

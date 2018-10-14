@@ -43,8 +43,32 @@
     - upload
 
 #Netdata
-#- platform: netdata
-#  resources:
+- platform: netdata
+  resources:
+    load15:
+      data_group: system.load
+      element: load15
+    cpu:
+      data_group: system.cpu
+      element: system
+    freeram:
+      data_group: system.ram
+      element: free
+    usedram:
+      data_group: system.ram
+      element: used
+    cachedram:
+      data_group: system.ram
+      element: cached
+    Boot:
+      data_group: disk_space._
+      element: avail
+    Media:
+      data_group: disk_space._media_plex
+      element: avail
+    Cloud:
+      data_group: disk_space._media_srv
+      element: avail
 #    "System CPU":
 #      data_group: system.cpu
 #      element: system
@@ -139,3 +163,48 @@
 - platform: time_date
   display_options:
   - 'time'
+
+#SpaceX
+#Starman
+- platform: rest
+  name: Starman
+  json_attributes:
+    - earth_distance_km
+  value_template: '{{ value_json["speed_kph"] }}'
+  unit_of_measurement: "km/h"
+  resource: 'https://api.spacexdata.com/v2/info/roadster'
+#Next Rocket Launch
+- platform: rest
+  name: SpaceX
+  json_attributes:
+    - mission_name
+    - launch_site
+    - rocket
+  value_template: '{{ value_json["launch_date_unix"] }}'
+  resource: 'https://api.spacexdata.com/v2/launches/next'
+#Sensors
+- platform: template
+  sensors:
+    starman_speed:
+      friendly_name: 'Starman Speed'
+      value_template: '{{ states.sensor.starman.state | round(0) }}'
+      unit_of_measurement: 'km/h'
+    starman_earth_distance:
+      friendly_name: 'Starman Earthdistance'
+      value_template: '{{ (states.sensor.starman.attributes["earth_distance_km"] | multiply(0.000001)) | round(2) }}'
+      unit_of_measurement: 'km x10⁶'
+    spacex_next_launch_day:
+      friendly_name: 'Date'
+      value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%d/%m %Y")}}'
+    spacex_next_launch_time:
+      friendly_name: 'Time'
+      value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%H:%M")}}'
+    spacex_next_rocket:
+      friendly_name: 'Rocket'
+      value_template: '{{ states.sensor.spacex.attributes["rocket"]["rocket_name"] }}'
+    spacex_next_launch_site:
+      friendly_name: 'Launchsite'
+      value_template: '{{ states.sensor.spacex.attributes["launch_site"]["site_name_long"] }}'
+    spacex_next_mission_name:
+      friendly_name: 'Mission'
+      value_template: '{{ states.sensor.spacex.attributes["mission_name"] }}'

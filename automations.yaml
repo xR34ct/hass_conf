@@ -34,7 +34,6 @@
   trigger:
   - entity_id: updater.updater
     platform: state
-  condition: []
   action:
   - data:
       message: There is an update to Homeassistant
@@ -44,7 +43,6 @@
   trigger:
   - event: start
     platform: homeassistant
-  condition: []
   action:
   - data:
       name: darkcyan
@@ -56,54 +54,43 @@
     platform: state
     to: '1'
   condition:
-  - after: 07:00
-    before: '23:00'
-    condition: time
+  - condition: and
+    conditions:
+    - condition: time
+      after: '07:00'
+      before: '23:00'
+    - condition: template
+      value_template: "{{ not is_state('sensor.plex_sensor', 'Playing') }}"
   action:
   - data:
       brightness_pct: 50
       entity_id: light.living_room
       white_value: 200
     service: light.turn_on
-- action:
+- id: '1521562752133'
+  alias: Movie Time
+  trigger:
+  - entity_id: sensor.plex_sensor
+    platform: state
+    to: Playing
+  action:
   - data:
       entity_id: light.living_room
     service: light.turn_off
-  alias: Movie Time
-  condition:
-  - condition: state
-    entity_id: sun.sun
-    state: below_horizon
-  id: '1521562752133'
+- id: '1521580166378'
+  alias: Movie Paused/Stopped
   trigger:
-  - entity_id: media_player.ares_2
-    from: idle
+  - entity_id: sensor.plex_sensor
+    from: Playing
     platform: state
-    to: playing
-  - entity_id: media_player.ares_2
-    from: paused
-    platform: state
-    to: playing
-- action:
+  condition:
+  - below: '5000'
+    condition: numeric_state
+    entity_id: sensor.living_room_light
+  action:
   - data:
-      brightness_pct: 50
       entity_id: light.living_room
     service: light.turn_on
-  alias: Movie Paused/Stopped
-  condition:
-  - condition: state
-    entity_id: sun.sun
-    state: below_horizon
-  id: '1521580166378'
-  trigger:
-  - entity_id: media_player.ares_2
-    from: playing
-    platform: state
-    to: paused
-  - entity_id: media_player.ares_2
-    from: playing
-    platform: state
-    to: idle
 - action:
   - data:
       entity_id: light.living_room
@@ -170,9 +157,19 @@
     platform: state
     to: '1'
   condition:
-  - after: '23:00'
-    before: 07:00
-    condition: time
+  - condition: and
+    conditions:
+    - condition: time
+      after: '23:00'
+      before: 07:00
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: sensor.plex_sensor
+        state: Stopped
+      - condition: state
+        entity_id: sensor.plex_sensor
+        state: Paused
   action:
   - data:
       brightness_pct: 5
@@ -191,26 +188,25 @@
   - data:
       entity_id: light.living_room
     service: light.turn_off
+- id: '1534792709238'
+  alias: Living Room - Dim
+  trigger:
+  - entity_id: sensor.living_room_motion
+    for:
+      minutes: 15
+    platform: state
+    to: '0'
+  action:
+  - data:
+      brightness_pct: 5
+      entity_id: light.living_room
+      white_value: 20
+    service: light.turn_on
 - id: '1538468416706'
   alias: Season Changer
   trigger:
   - entity_id: sensor.season
-    from: Winter
     platform: state
-    to: Spring
-  - entity_id: sensor.season
-    from: Spring
-    platform: state
-    to: Summer
-  - entity_id: sensor.season
-    from: Summer
-    platform: state
-    to: Fall
-  - entity_id: sensor.season
-    from: Fall
-    platform: state
-    to: Winter
-  condition: []
   action:
   - data:
       message: The seasons have changed!
@@ -280,8 +276,9 @@
 - id: '1538268416766'
   alias: Alarm
   trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == (states.input_datetime.input_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == (states.input_datetime.input_time.attributes.timestamp
+      | int | timestamp_custom(''%H:%M'', False)) }}'
   condition:
   - condition: state
     entity_id: input_boolean.alarmstatus
@@ -297,10 +294,85 @@
     service: media_player.shuffle_set
   - data:
       entity_id: media_player.spotify
-      volume_level: '1'
+      volume_level: '0.3'
     service: media_player.volume_set
   - data:
       entity_id: media_player.spotify
       media_content_id: spotify:user:icehot94:playlist:2ZZUYCryHU5g22zaSOuAug
       media_content_type: playlist
     service: media_player.play_media
+- id: '1539475234169'
+  alias: 'Cold outside '
+  trigger:
+  - at: 08:00
+    platform: time
+  condition:
+  - above: '0'
+    below: '10'
+    condition: numeric_state
+    entity_id: sensor.yr_temperature
+  action:
+  - data:
+      message: Det kommer vara kallt idag!
+      target:
+      - channel/anethass
+    service: notify.pushbullet
+- id: '1539475958239'
+  alias: Motion at home
+  trigger:
+  - entity_id: sensor.hallway_motion
+    from: '0'
+    platform: state
+    to: '1'
+  - entity_id: sensor.living_room_motion
+    from: '0'
+    platform: state
+    to: '1'
+  condition:
+  - condition: state
+    entity_id: device_tracker.zeus
+    state: not_home
+  action:
+  - data:
+      message: There is motion at home!
+      target:
+      - channel/anethass
+    service: notify.pushbullet
+- id: '15394723545239'
+  alias: Rocket Launch
+  trigger:
+  - platform: template
+    value_template: '{{ (now().strftime("%s") | int + 600) == (states.sensor.spacex.state | int) }}'
+  condition:
+  - condition: time
+    after: '07:00'
+    before: '23:00'
+    #condition: time
+  action:
+  - service: notify.pushbullet
+    data:
+      target:
+      - channel/anethass
+      message: >
+        SPACEX LAUNCH STARTS IN 10 MIN
+        ══════════════════════════ 
+
+
+        Mission: {{ states('sensor.spacex_next_mission_name') }} 
+          │
+          ├─ Time: .. {{ states('sensor.spacex_next_launch_time') }}
+          ├─ Rocket: ..... {{ states('sensor.spacex_next_rocket') }}
+          └─ Site: ........... {{ states('sensor.spacex_next_launch_site') }}
+          
+
+- id: '15394359658439'
+  alias: Testing Webhooks
+  trigger:
+    platform: webhook
+    webhook_id: testingwebhooks
+  action:
+  - service_template: "{{ trigger.json['service'] }}"
+    data_template:
+      message: "{{ trigger.json['data']['message'] }}"
+      target:
+      - "{{ trigger.json['data']['target'] }}"
