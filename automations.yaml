@@ -205,12 +205,23 @@
 - id: '1538468416706'
   alias: Season Changer
   trigger:
-  - entity_id: sensor.season
+  - entity_id: sensor.season_checker
     platform: state
   action:
-  - data:
-      message: The seasons have changed!
-    service: notify.pushbullet
+  - service: input_datetime.set_datetime
+    data_template:
+      entity_id: input_datetime.date_time
+      date: >
+        {% if is_state("sensor.season_checker", "Spring") %}
+        {% set date_time = now().fromordinal((now().toordinal() | int ) - 8).strftime("%Y-%m-%d") %}
+        {% else %}
+        {% set date_time = now().fromordinal((now().toordinal() | int ) - 6).strftime("%Y-%m-%d") %}
+        {% endif %}
+  - service: notify.pushbullet
+    data_template:
+      message: The seasons changed!
+    
+  
 - id: '1535465419796'
   alias: Spotify Volume (Set)
   trigger:

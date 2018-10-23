@@ -54,3 +54,15 @@ sensor.netdata_load_15:
   friendly_name: Load 15
 sensor.netdata_server:
   friendly_name: Cloud
+sensor.netdata_cpu:
+  unit_of_measurement: '% cpu'
+sensor.temp:
+  icon: mdi:thermometer
+sensor.season_checker:
+  icon: mdi:calendar
+device_tracker.hades:
+  icon: mdi:desktop-classic
+device_tracker.poseidon:
+  icon: mdi:server
+device_tracker.zeus:
+  icon: mdi:phone

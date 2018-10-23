@@ -9,7 +9,9 @@ resources:
     type: js
   - url: /local/group-card/group-card.js
     type: js
-
+  - url: /local/button-card/button-card.js
+    type: module
+  
 #background: center / cover no-repeat url("/background.png") fixed
 
 views:
@@ -28,12 +30,17 @@ views:
             name: Zeus
           - entity: sensor.watchbatt
             name: Chronos
-      - type: glance
-        title: Who is home?
+      - type: entity-filter
         entities:
           - device_tracker.zeus
           - device_tracker.hades
           - device_tracker.poseidon
+        state_filter:
+        - home
+        card: 
+          type: glance
+          title: Who is home?
+          show_state: false
             
       - type: entities
         title: Alarm Primer
@@ -49,6 +56,7 @@ views:
         title: Wake on LAN
         show_header_toggle: false
   - icon: mdi:sofa
+    background: radial-gradient(crimson, skyblue)
     title: Living Room
     cards:
       - type: horizontal-stack
@@ -62,6 +70,7 @@ views:
               - type: sensor
                 entity: sensor.living_room_light
                 name: Light Level
+                icon: mdi:theme-light-dark
                 accuracy: 24
               - type: sensor
                 entity: sensor.living_room_temperature
@@ -76,24 +85,46 @@ views:
               - type: sensor
                 entity: sensor.hallway_light
                 name: Light Level
+                icon: mdi:theme-light-dark
                 accuracy: 24
               - type: sensor
                 entity: sensor.hallway_temperature
                 name: Temperature
                 accuracy: 24
           
+      # - type: horizontal-stack
+        # cards:
+          # - type: "custom:button-card"
+            # color: auto
+            # color_type: card
+            # entity: device_tracker.zeus
+            # icon: mdi:lightbulb
+            # name: Zeus
+            # color: auto
+            # action: more_info
+            
       - type: entities
-        title: Lights
         entities: 
           - entity: light.living_room
-            icon: mdi:power
+            icon: mdi:lightbulb
             name: Livingroom
-          - entity: light.hue_white_lamp_1
-            icon: mdi:power
+          - entity: light.hallway
+            icon: mdi:lightbulb
             name: Hallway
-        show_header_toggle: false        
+        show_header_toggle: false  
+        
+      - type: glance
+        title: Motion sensors
+        entities: 
+          - entity: sensor.living_room_motion
+            icon: mdi:run
+            name: Livingroom
+          - entity: sensor.hallway_motion
+            icon: mdi:run
+            name: Hallway
           
   - icon: mdi:play-pause
+    background: radial-gradient(crimson, skyblue)
     title: Media
     cards:
       - type: vertical-stack
@@ -109,50 +140,93 @@ views:
             - input_boolean.spotify_shuffle
             - input_number.spotify_volume
           
-          
-      
-        
-      - type: media-control
-        entity: media_player.shield
+      #- type: media-control
+      #  entity: media_player.shield
+      - type: vertical-stack
+        cards:
+        - type: entities
+          title: Media Supervising
+          entities:
+          - entity: sensor.sonarr_series
+            name: Sonarr
+          - entity: sensor.radarr_movies
+            name: Radarr
+          - entity: sensor.sonarr_wanted
+            name: Wanted
+          - entity: sensor.sonarr_upcoming
+            name: Upcoming
+          - entity: sensor.radarr_upcoming
+            name: Upcoming
+          - entity: sensor.sonarr_queue
+            name: Queue
+          # - entity: sensor.deluge_status
+            # name: Status
+        - type: history-graph
+          entities:
+            - entity: sensor.deluge_down_speed
+              name: Down
+            - entity: sensor.deluge_up_speed
+              name: Up
+          hours_to_show: 24
                
   - icon: mdi:temperature-celsius
-    # Title of the view. Will be used as the tooltip for tab icon
+    background: radial-gradient(crimson, skyblue)
     title: Temperature
+    panel: false
     cards:
-        # Entities card will take a list of entities and show their state.
-      - type: glance
-        # Title of the entities card
-        title: Outside Weather Data
-        # The entities here will be shown in the same order as specified.
-        # Each entry is an entity ID or a map with extra options.
-        entities:
-          - sensor.yr_temperature
-          - sensor.yr_precipitation
-          #- sensor.yr_wind_speed
-          - sensor.yr_pressure
-          #- sensor.yr_wind_direction
-          - sensor.yr_humidity
-          - sensor.yr_fog
-          - sensor.yr_cloudiness
-          #- sensor.yr_low_clouds
-          #- sensor.yr_medium_clouds
-          #- sensor.yr_high_clouds
-          - sensor.yr_dewpoint_temperature
-          - sun.sun
-          - sensor.season
-          
-    #  - type: weather-forecast
-    #    entity: weather.yweather
-    #    title: Forecast
-      
+    # - type: horizontal-stack
+      # cards:
+      # - type: vertical-stack
+        # cards:
+    # - type: markdown
+      # content: >
+        # <h1><center>Prognosis
+    # - type: vertical-stack
+      # cards:
+      # - type: horizontal-stack
+        # cards:
+    - type: vertical-stack
+      cards:
+      - type: markdown
+        content: >
+          <h2><center>Yahoo
       - type: 'custom:weather-card'
         entity_weather: weather.yweather
         entity_sun: sun.sun
-        
+  
+    - type: vertical-stack
+      cards:
+      - type: markdown
+        content: >
+          <h2><center>Yr
+      - type: glance
+        entities:
+        - sensor.yr_temperature
+        - entity: sensor.yr_precipitation
+          icon: mdi:weather-rainy
+        #- sensor.yr_wind_speed
+        - sensor.yr_pressure
+        #- sensor.yr_wind_direction
+        - entity: sensor.yr_humidity
+          icon: mdi:water
+        - entity: sensor.yr_fog
+          icon: mdi:weather-fog
+        - entity: sensor.yr_cloudiness
+          icon: mdi:weather-cloudy
+        #- sensor.yr_low_clouds
+        #- sensor.yr_medium_clouds
+        #- sensor.yr_high_clouds
+        - entity: sensor.yr_dewpoint_temperature
+          name: Dewpoint
+        - sun.sun
+        column_width: 33%
       - type: picture
         image: https://www.yr.no/sted/Sverige/%C3%96sterg%C3%B6tland/Link%C3%B6ping/meteogram.svg
-        
-  - icon: mdi:server-network
+      
+      
+          
+  - icon: mdi:lan
+    background: radial-gradient(crimson, skyblue)
     title: Server info
     cards:
       #Netdata
@@ -246,6 +320,7 @@ views:
                 font-weight: bold
          
   - icon: mdi:rocket
+    background: radial-gradient(crimson, skyblue)
     title: SpaceX
     cards:
       - type: entities
@@ -260,13 +335,37 @@ views:
           - sensor.spacex_next_launch_site
           - automation.rocket_launch
   
-  - icon: mdi:home
-    title: Automatron
+  - title: SMHI
+    cards:
+      - type: vertical-stack
+        cards:
+        - type: markdown
+          content: >
+              <center><h1> SMHI - Season and temp last 30 days </h1></center>
+        - type: entities
+          entities:
+          - entity: sensor.season_checker
+            name: Current season
+          - input_datetime.season_date
+          - entity: sensor.season_days
+            name: Days since season changed
+            icon: mdi:calendar
+          - entity: sensor.mean_temp
+            name: Yesterday's meantemperature
+            icon: mdi:thermometer
+        - type: history-graph
+          entities:
+            - sensor.mean_temp
+          hours_to_show: 720
+  #- icon: mdi:home
+  - title: Automatron
     cards:
       - type: custom:group-card
         card:
           type: entities
           title: All automations
         group: group.all_automations
+  
+  
         
         

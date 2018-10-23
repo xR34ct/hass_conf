@@ -10,8 +10,8 @@ livingroom_day:
   constrain_end_time: '22:59:59'
   delay: 900
   dim_delay: 300
-  brightness_pct: 50
-  dim_brightness_pct: 25
+  brightness_pct: 80
+  dim_brightness_pct: 30
 hallway_day:
   module: motion
   class: Motion
@@ -19,9 +19,9 @@ hallway_day:
   entity_id: light.hallway
   constrain_start_time: '07:00:00'
   constrain_end_time: '22:59:59'
-  delay: 60
-  dim_delay: 0
-  brightness_pct: 50
+  delay: 45
+  dim_delay: 15
+  brightness_pct: 80
   dim_brightness_pct: 50
 livingroom_night:
   module: motion
@@ -41,8 +41,25 @@ hallway_night:
   entity_id: light.hallway
   constrain_start_time: '23:00:00'
   constrain_end_time: '06:59:59'
-  delay: 60
-  dim_delay: 0
+  delay: 45
+  dim_delay: 15
   brightness_pct: 25
   dim_brightness_pct: 25
-  
+season_changer:
+  module: season
+  class: Season
+set_spotify_volume:
+  module: spotify
+  class: SetVolume
+sync_spotify_volume:
+  module: spotify
+  class: SyncVolume
+set_spotify_shuffle:
+  module: spotify
+  class: SetShuffle
+sync_spotify_shuffle:
+  module: spotify
+  class: SyncShuffle
+sync_spotify_source:
+  module: spotify
+  class: Source

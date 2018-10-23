@@ -14,7 +14,7 @@ homeassistant:
   customize: !include customize.yaml
   whitelist_external_dirs:
     - /home/xr34ct/scripts/misc/data
-    - /etc/avdagic.net/pics
+    - /etc/avdagic.net
   
 
 # Show links to resources in log and frontend
@@ -70,7 +70,7 @@ logbook:
 
 weather:
   - platform: yweather
-#    woeid: 897380
+    woeid: 897380
 
 input_boolean:
   weather:
@@ -126,6 +126,7 @@ hue:
 #Diffrent media-players
 media_player:
   - platform: spotify
+    scan_interval: 1
     client_id: !secret spotify_id
     client_secret: !secret spotify_secret
     cashe_path: /home/homeassistant/.homeassistant/.spotify-token-cashe
@@ -188,6 +189,10 @@ input_datetime:
     name: Alarm Input
     has_date: false
     has_time: true
+  season_date:
+    name: Season started on
+    has_date: true
+    has_time: false
 
 camera:
   - platform: generic

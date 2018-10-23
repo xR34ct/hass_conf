@@ -16,7 +16,33 @@
       - dewpointTemperature
 - platform: file
   file_path: /scripts/misc/data/season.txt
-  name: Season
+  name: Season_checker
+- platform: file
+  name: Mean Temp
+  file_path: /etc/avdagic.net/smhi_temp.json
+  value_template: "{{ value_json.temp | float }}"
+- platform: file
+  name: Mean Temp Day
+  file_path: /etc/avdagic.net/smhi_temp.json
+  value_template: "{{ value_json.date }}"
+  #value_template: "{{ strptime(value_json.date,'%Y-%m-%d') - strptime(states('input_datetime.season_date'),'%Y-%m-%d') }}"
+  unit_of_measurement: days
+- platform: template
+  sensors:
+    season_days:
+      unit_of_measurement: days
+      value_template: "{{ strptime(states('sensor.mean_temp_day'),'%Y-%m-%d').toordinal() - strptime(states('input_datetime.season_date'),'%Y-%m-%d').toordinal() }}"
+# - platform: template
+  # sensors:
+    # season_date:
+      # friendly_name: "Season changed"
+      # value_template: >
+        # "{% if is_state("sensor.season_checker", "Winter") %}
+        # {{ (now().fromordinal((now().toordinal() | int ) - 8)).strftime("%d/%m %Y") }}
+        # {% else %}
+        # {{ (now().fromordinal((now().toordinal() | int ) - 6)).strftime("%d/%m %Y") }}
+        # {% endif %}"
+  
 
 #Check remaining dayts on certificate
 - platform: cert_expiry
@@ -163,6 +189,7 @@
 - platform: time_date
   display_options:
   - 'time'
+  - 'date'
 
 #SpaceX
 #Starman
@@ -208,3 +235,27 @@
     spacex_next_mission_name:
       friendly_name: 'Mission'
       value_template: '{{ states.sensor.spacex.attributes["mission_name"] }}'
+
+
+- platform: sonarr
+  api_key: !secret sonarr
+  monitored_conditions:
+    - upcoming
+    - series
+    - wanted
+    - queue
+  days: 1
+- platform: radarr
+  api_key: !secret radarr
+  monitored_conditions:
+    - upcoming
+    - movies
+  days: 7
+- platform: deluge
+  host: 192.168.5.2
+  username: !secret deluge_user
+  password: !secret deluge_pass
+  monitored_variables:
+    - 'current_status'
+    - 'download_speed'
+    - 'upload_speed'
