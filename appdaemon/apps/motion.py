@@ -1,4 +1,5 @@
 import appdaemon.plugins.hass.hassapi as hass
+import time
 
 
 class Motion(hass.Hass):
@@ -25,7 +26,16 @@ class Motion(hass.Hass):
       self.handle = None
     
   def motion_on(self, entity, attribute, old, new, kwargs):
+    if self.get_state("device_tracker.zeus") != "home":
+        self.log("Nobody home, waiting 10 sec")
+        time.sleep(30)
+        if self.get_state("device_tracker.zeus") != "home":
+            self.log("Still nobody home, alerting")
+            self.call_service("notify/pushbullet", target = "channel/anethass", title = "Home Assistant", message = "Movement at home")
+            self.call_service("light/turn_on", entity_id = "light.living_room", flash = "long")
+            self.call_service("light/turn_on", entity_id = "light.hallway", flash = "long")
     if self.get_state("device_tracker.zeus") == "home":
+        self.log("Someone is home")
         if self.args["entity_id"] == "light.living_room":
             if self.get_state("sensor.plex_sensor") != "Playing":
                 self.log("Good Ares is not playing plex")
@@ -33,9 +43,6 @@ class Motion(hass.Hass):
                     self.light_on(self, self.args["entity_id"])
         else:
             self.light_on(self, self.args["entity_id"])
-    else:
-        self.call_service("notify/pushbullet", target= "channel/anethass", title = "Home Assistant", message = "Movement at home")
-        self.log("Notification sent for motion at home")
   
   def light_on(self, entity, attribute):
         self.log(self.args["entity_id"] + " turned on because motion was detected and Zeus is home")

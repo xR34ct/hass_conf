@@ -1,5 +1,5 @@
 spotify_music:
-  alias: Play selected spotify playlist
+  alias: Play selected Spotify playlist
   sequence:
     - service: media_player.volume_set
       data_template:
@@ -29,10 +29,24 @@ spotify_music:
       data_template:
         entity_id: media_player.spotify
         shuffle: '{{ states.input_boolean.spotify_shuffle.state }}'
-#    - service: media_player.media_next_track
-#      data:
-#        entity_id: media_player.spotify
-#set_alarm:
-#  alias: Set alarm at selected alarm
-#  sequence:
-#    - service: 
+
+spotify_alarm:
+  alias: Play selected Spotify playlist as alarm
+  sequence:
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.spotify
+        volume_level: 0.6
+    - service: media_player.select_source
+      data_template: 
+        entity_id: media_player.spotify
+        source: HADES
+    - service: media_player.play_media
+      data_template:
+        entity_id: media_player.spotify
+        media_content_type: playlist
+        media_content_id: spotify:user:icehot94:playlist:2ZZUYCryHU5g22zaSOuAug
+    - service: media_player.shuffle_set
+      data_template:
+        entity_id: media_player.spotify
+        shuffle: on

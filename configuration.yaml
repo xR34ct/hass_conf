@@ -168,6 +168,9 @@ switch:
     name: "Hades"
     turn_off: 
       service: shell_command.turn_off_hades
+      
+  - platform: tplink
+    host: 192.168.5.184
 
 shell_command:
     turn_off_hades: ssh avdag@Hades shutdown -s -t 10
@@ -185,7 +188,7 @@ google_assistant:
 
    
 input_datetime:
-  input_time:
+  alarm:
     name: Alarm Input
     has_date: false
     has_time: true

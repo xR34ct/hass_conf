@@ -45,7 +45,7 @@ views:
       - type: entities
         title: Alarm Primer
         entities: 
-          - entity: input_datetime.input_time
+          - entity: input_datetime.alarm
             name: Alarm Time
           - input_boolean.alarmstatus
         show_header_toggle: false
@@ -57,72 +57,60 @@ views:
         show_header_toggle: false
   - icon: mdi:sofa
     background: radial-gradient(crimson, skyblue)
+    title: Livingroom
+    cards:
+      - type: custom:group-card
+        card:
+          type: entities
+          title: Lights
+        group: group.livingroom_lights
+      - type: vertical-stack
+        cards:
+          - type: history-graph
+            entities:
+              - sensor.living_room_light
+            hours_to_show: 24
+          - type: history-graph
+            entities:
+              - sensor.living_room_temperature
+            hours_to_show: 168
+          - type: sensor
+            entity: sensor.living_room_motion
+            name: Motion
+            accuracy: 24
+          
+  - icon: mdi:hanger
+    background: radial-gradient(crimson, skyblue)
+    title: Hallway
+    cards:
+      - type: custom:group-card
+        card:
+          type: entities
+          title: Lights
+        group: group.hallway_lights
+      - type: vertical-stack
+        cards:
+          - type: history-graph
+            entities:
+              - sensor.hallway_light
+            hours_to_show: 24
+          - type: history-graph
+            entities:
+              - sensor.hallway_temperature
+            hours_to_show: 168
+          - type: sensor
+            entity: sensor.hallway_motion
+            name: Motion
+            accuracy: 24
+  
+  - icon: mdi:fridge
+    background: radial-gradient(crimson, skyblue)
     title: Living Room
     cards:
-      - type: horizontal-stack
-        cards:
-          - type: vertical-stack
-            title: Livingroom
-            cards:
-              - type: markdown
-                content: >
-                    <center><h1> Livingroom </h1></center>
-              - type: sensor
-                entity: sensor.living_room_light
-                name: Light Level
-                icon: mdi:theme-light-dark
-                accuracy: 24
-              - type: sensor
-                entity: sensor.living_room_temperature
-                name: Temperature
-                accuracy: 24
-          - type: vertical-stack
-            title: Hallway
-            cards:
-              - type: markdown
-                content: >
-                    <center><h1> Hallway </h1></center>
-              - type: sensor
-                entity: sensor.hallway_light
-                name: Light Level
-                icon: mdi:theme-light-dark
-                accuracy: 24
-              - type: sensor
-                entity: sensor.hallway_temperature
-                name: Temperature
-                accuracy: 24
-          
-      # - type: horizontal-stack
-        # cards:
-          # - type: "custom:button-card"
-            # color: auto
-            # color_type: card
-            # entity: device_tracker.zeus
-            # icon: mdi:lightbulb
-            # name: Zeus
-            # color: auto
-            # action: more_info
-            
       - type: entities
-        entities: 
-          - entity: light.living_room
-            icon: mdi:lightbulb
-            name: Livingroom
-          - entity: light.hallway
-            icon: mdi:lightbulb
-            name: Hallway
-        show_header_toggle: false  
-        
-      - type: glance
-        title: Motion sensors
-        entities: 
-          - entity: sensor.living_room_motion
-            icon: mdi:run
-            name: Livingroom
-          - entity: sensor.hallway_motion
-            icon: mdi:run
-            name: Hallway
-          
+        entities:
+          - switch.kitchen_plug
+  
   - icon: mdi:play-pause
     background: radial-gradient(crimson, skyblue)
     title: Media
@@ -192,6 +180,15 @@ views:
           <h2><center>Yahoo
       - type: 'custom:weather-card'
         entity_weather: weather.yweather
+        entity_sun: sun.sun
+        
+    - type: vertical-stack
+      cards:
+      - type: markdown
+        content: >
+          <h2><center>SMHI
+      - type: 'custom:weather-card'
+        entity_weather: weather.smhi_linköping
         entity_sun: sun.sun
   
     - type: vertical-stack
