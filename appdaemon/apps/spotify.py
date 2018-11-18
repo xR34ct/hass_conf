@@ -95,3 +95,22 @@ class Source(hass.Hass):
     self.log("Source Changed")
     OPTION = self.get_state("sensor.spotify_source")
     self.call_service("input_select/select_option", entity_id = "input_select.spotify_source", option = OPTION)
+    
+class StopPlay(hass.Hass):
+
+  def initialize(self):
+    #self.log("Started")
+    self.listen_state(self.came_home, "device_tracker.zeus_router", new = "home")
+    self.listen_state(self.left, "device_tracker.zeus_router", new = "not_home")
+    
+  def left(self, entity, attribute, old, new, kwargs):
+    if self.get_state("sensor.spotify_source") == "HADES" or self.get_state("sensor.spotify_source") == "Ares":
+    #    self.log("Hades or Ares is source")
+        if self.get_state("media_player.spotify") == "playing":
+    #        self.log("Playing so pausing")
+            self.call_service("media_player/media_pause", entity_id = "media_player.spotify")
+        
+  def came_home(self, entity, attribute, old, new, kwargs):
+    if self.get_state("media_player.spotify") == "playing" and self.get_state("device_tracker.hades") == "home":# and self.get_state("input_select.spotify_source") == "Zeus":
+    #    self.log("Hades is online and Zeus is playing so tranfering")
+        self.call_service("media_player/select_source", entity_id = "media_player.spotify", source = "HADES")

@@ -66,3 +66,5 @@ device_tracker.poseidon:
   icon: mdi:server
 device_tracker.zeus:
   icon: mdi:phone
+input_boolean.sleeping:
+  friendly_name: Sleeping

@@ -32,7 +32,8 @@ views:
             name: Chronos
       - type: entity-filter
         entities:
-          - device_tracker.zeus
+          - device_tracker.zeus_router
+          - device_tracker.owntracks_zeus
           - device_tracker.hades
           - device_tracker.poseidon
         state_filter:
@@ -55,6 +56,10 @@ views:
             icon: mdi:desktop-classic
         title: Wake on LAN
         show_header_toggle: false
+        
+      - type: entities
+        entities:
+          - input_boolean.testing
   - icon: mdi:sofa
     background: radial-gradient(crimson, skyblue)
     title: Livingroom
@@ -173,14 +178,14 @@ views:
       # cards:
       # - type: horizontal-stack
         # cards:
-    - type: vertical-stack
-      cards:
-      - type: markdown
-        content: >
-          <h2><center>Yahoo
-      - type: 'custom:weather-card'
-        entity_weather: weather.yweather
-        entity_sun: sun.sun
+    # - type: vertical-stack
+      # cards:
+      # - type: markdown
+        # content: >
+          # <h2><center>Yahoo
+      # - type: 'custom:weather-card'
+        # entity_weather: weather.yweather
+        # entity_sun: sun.sun
         
     - type: vertical-stack
       cards:
@@ -191,32 +196,32 @@ views:
         entity_weather: weather.smhi_linköping
         entity_sun: sun.sun
   
-    - type: vertical-stack
-      cards:
-      - type: markdown
-        content: >
-          <h2><center>Yr
-      - type: glance
-        entities:
-        - sensor.yr_temperature
-        - entity: sensor.yr_precipitation
-          icon: mdi:weather-rainy
-        #- sensor.yr_wind_speed
-        - sensor.yr_pressure
-        #- sensor.yr_wind_direction
-        - entity: sensor.yr_humidity
-          icon: mdi:water
-        - entity: sensor.yr_fog
-          icon: mdi:weather-fog
-        - entity: sensor.yr_cloudiness
-          icon: mdi:weather-cloudy
-        #- sensor.yr_low_clouds
-        #- sensor.yr_medium_clouds
-        #- sensor.yr_high_clouds
-        - entity: sensor.yr_dewpoint_temperature
-          name: Dewpoint
-        - sun.sun
-        column_width: 33%
+    # - type: vertical-stack
+      # cards:
+      # - type: markdown
+        # content: >
+          # <h2><center>Yr
+      # - type: glance
+        # entities:
+        # - sensor.yr_temperature
+        # - entity: sensor.yr_precipitation
+          # icon: mdi:weather-rainy
+        # #- sensor.yr_wind_speed
+        # - sensor.yr_pressure
+        # #- sensor.yr_wind_direction
+        # - entity: sensor.yr_humidity
+          # icon: mdi:water
+        # - entity: sensor.yr_fog
+          # icon: mdi:weather-fog
+        # - entity: sensor.yr_cloudiness
+          # icon: mdi:weather-cloudy
+        # #- sensor.yr_low_clouds
+        # #- sensor.yr_medium_clouds
+        # #- sensor.yr_high_clouds
+        # - entity: sensor.yr_dewpoint_temperature
+          # name: Dewpoint
+        # - sun.sun
+        # column_width: 33%
       - type: picture
         image: https://www.yr.no/sted/Sverige/%C3%96sterg%C3%B6tland/Link%C3%B6ping/meteogram.svg
       
@@ -354,7 +359,6 @@ views:
           entities:
             - sensor.mean_temp
           hours_to_show: 720
-  #- icon: mdi:home
   - title: Automatron
     cards:
       - type: custom:group-card

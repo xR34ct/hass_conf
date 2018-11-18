@@ -1,15 +1,16 @@
 - id: '1508734891497'
   alias: Good morning
   trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == state_attr('input_datetime.alarm', 'timestamp') | timestamp_custom('%H:%M', false) }}"
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == state_attr(''input_datetime.alarm'',
+      ''timestamp'') | timestamp_custom(''%H:%M'', false) }}'
   condition:
-    - condition: state
-      entity_id: device_tracker.zeus
-      state: 'home'
-    - condition: state
-      entity_id: input_boolean.alarmstatus
-      state: 'on'
+  - condition: state
+    entity_id: device_tracker.zeus_router
+    state: home
+  - condition: state
+    entity_id: input_boolean.alarmstatus
+    state: 'on'
   action:
   - data:
       entity_id: switch.hades
@@ -19,6 +20,9 @@
       entity_id: switch.kitchen_plug
     service: switch.turn_on
   - service: script.spotify_alarm
+  - data:
+      entity_id: input_boolean.sleeping
+    service: input_boolean.turn_off
 - id: '1510513414834'
   alias: Hass Color
   trigger:
@@ -114,3 +118,15 @@
       message: '{{ trigger.json[''data''][''message''] }}'
       target:
       - '{{ trigger.json[''data''][''target''] }}'
+- id: '1542146430171'
+  alias: Tea off
+  trigger:
+  - entity_id: switch.kitchen_plug
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - delay: '300'
+  - data:
+      entity_id: switch.kitchen_plug
+    service: switch.turn_off

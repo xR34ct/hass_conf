@@ -6,45 +6,49 @@ livingroom_day:
   class: Motion
   sensor: sensor.living_room_motion
   entity_id: light.living_room
-  constrain_start_time: '07:00:00'
-  constrain_end_time: '22:59:59'
+  # constrain_start_time: '07:00:00'
+  # constrain_end_time: '22:59:59'
   delay: 900
   dim_delay: 300
-  brightness_pct: 80
-  dim_brightness_pct: 30
+  day_brightness_pct: 80
+  day_dim_brightness_pct: 30
+  night_brightness_pct: 45
+  night_dim_brightness_pct: 15
 hallway_day:
   module: motion
   class: Motion
   sensor: sensor.hallway_motion
   entity_id: light.hallway
-  constrain_start_time: '07:00:00'
-  constrain_end_time: '22:59:59'
+  # constrain_start_time: '07:00:00'
+  # constrain_end_time: '22:59:59'
   delay: 45
   dim_delay: 15
-  brightness_pct: 80
-  dim_brightness_pct: 50
-livingroom_night:
-  module: motion
-  class: Motion
-  sensor: sensor.living_room_motion
-  entity_id: light.living_room
-  constrain_start_time: '23:00:00'
-  constrain_end_time: '06:59:59'
-  delay: 900
-  dim_delay: 300
-  brightness_pct: 5
-  dim_brightness_pct: 5
-hallway_night:
-  module: motion
-  class: Motion
-  sensor: sensor.hallway_motion
-  entity_id: light.hallway
-  constrain_start_time: '23:00:00'
-  constrain_end_time: '06:59:59'
-  delay: 45
-  dim_delay: 15
-  brightness_pct: 25
-  dim_brightness_pct: 25
+  day_brightness_pct: 80
+  day_dim_brightness_pct: 50
+  night_brightness_pct: 25
+  night_dim_brightness_pct: 25
+# livingroom_night:
+  # module: motion
+  # class: Motion
+  # sensor: sensor.living_room_motion
+  # entity_id: light.living_room
+  # constrain_start_time: '23:00:00'
+  # constrain_end_time: '06:59:59'
+  # delay: 900
+  # dim_delay: 300
+  # brightness_pct: 5
+  # dim_brightness_pct: 5
+# hallway_night:
+  # module: motion
+  # class: Motion
+  # sensor: sensor.hallway_motion
+  # entity_id: light.hallway
+  # constrain_start_time: '23:00:00'
+  # constrain_end_time: '06:59:59'
+  # delay: 45
+  # dim_delay: 15
+  # brightness_pct: 25
+  # dim_brightness_pct: 25
 season_changer:
   module: season
   class: Season
@@ -63,3 +67,9 @@ sync_spotify_shuffle:
 sync_spotify_source:
   module: spotify
   class: Source
+got_home_play_else_pause:
+  module: spotify
+  class: StopPlay
+Presense_detection:
+  module: presence
+  class: Presence_Detect

@@ -37,13 +37,13 @@ ifttt:
 #Enable map in HA
 map:
 
-#mqtt:
-#  broker: !secret mqtt_broker
-#  port: !secret mqtt_port
-#  client_id: Hass
-#  keepalive: 60
-#  username: !secret mqtt_user
-#  password: !secret mqtt_pass
+# mqtt:
+  # broker: !secret mqtt_broker
+  # port: !secret mqtt_port
+  # client_id: hass
+  # keepalive: 60
+  # username: !secret mqtt_user
+  # password: !secret mqtt_pass
 
 
 # Enables configuration UI
@@ -81,6 +81,12 @@ input_boolean:
     name: Primed!
     initial: off
     icon: mdi:alarm-check
+  sleeping:
+    name: True if sleeping
+    initial: off
+  testing:
+    name: Test
+    initial: off
 
 # Track the sun
 sun:
@@ -116,6 +122,8 @@ input_select:
     options:
       - HADES
       - Ares
+      - Zeus
+      - Slappenz
     #initial: Ares
     icon: mdi:speaker-wireless
 
@@ -126,7 +134,7 @@ hue:
 #Diffrent media-players
 media_player:
   - platform: spotify
-    scan_interval: 1
+    scan_interval: 5
     client_id: !secret spotify_id
     client_secret: !secret spotify_secret
     cashe_path: /home/homeassistant/.homeassistant/.spotify-token-cashe
@@ -154,9 +162,9 @@ notify:
 #    gcm_api_key: !secret gcm_api_key
 #    gcm_sender_id: !secret gcm_sender_id
 
-mqtt:
-  broker: 192.168.5.2
-  port: 1883
+# mqtt:
+  # broker: 192.168.5.2
+  # port: 1883
 
 wake_on_lan:
 
@@ -171,9 +179,11 @@ switch:
       
   - platform: tplink
     host: 192.168.5.184
+    
+  
 
 shell_command:
-    turn_off_hades: ssh avdag@Hades shutdown -s -t 10
+    turn_off_hades: ssh "Mr. Classified"@Hades shutdown -s -t 10
 
 #Google Assistant
 google_assistant:
@@ -182,7 +192,9 @@ google_assistant:
   #access_token: !secret google_token
   api_key: !secret google_api_key
   exposed_domains:
-   - switch
+    - switch
+    - input_boolean
+    
    #- light
    #- media_player
 
