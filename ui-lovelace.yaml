@@ -5,13 +5,15 @@ resources:
 #    type: js
 #  - url: /local/my-webfont.css
 #    type: css
-  - url: /local/custom_ui/weather-card.js
-    type: js
+#  - url: /local/custom_ui/weather-card.js
+#    type: js
   - url: /local/group-card/group-card.js
     type: js
   - url: /local/button-card/button-card.js
     type: module
-  
+  - type: module
+    url: /local/custom_ui/custom-weather-card-chart.js
+
 #background: center / cover no-repeat url("/background.png") fixed
 
 views:
@@ -20,7 +22,8 @@ views:
     background: radial-gradient(crimson, skyblue)
     theme: dark-mode
     cards:
-      - type: glance
+      - id: 2966910d84bb419095fc3bad884daf8c  # Automatically created id
+        type: glance
         entities:
           - sensor.current_version
           - sensor.anet
@@ -30,50 +33,58 @@ views:
             name: Zeus
           - entity: sensor.watchbatt
             name: Chronos
-      - type: entity-filter
+      - id: 4983d29f16f943a5b3d8306b3d5c9f76  # Automatically created id
+        type: entity-filter
         entities:
-          - device_tracker.zeus_router
-          - device_tracker.owntracks_zeus
+#          - device_tracker.zeus_router
+#          - device_tracker.owntracks_zeu
+          - device_tracker.oneplus_6t
           - device_tracker.hades
           - device_tracker.poseidon
         state_filter:
-        - home
-        card: 
+          - home
+        card:
           type: glance
           title: Who is home?
           show_state: false
-            
-      - type: entities
+
+      - id: b3f6f92e2a7e4bb0aed9aa238bf6099e  # Automatically created id
+        type: entities
         title: Alarm Primer
-        entities: 
+        entities:
           - entity: input_datetime.alarm
             name: Alarm Time
           - input_boolean.alarmstatus
         show_header_toggle: false
-      - type: entities
-        entities: 
+      - id: 2d5ea873b38f4dff879d3fb93cebbdee  # Automatically created id
+        type: entities
+        entities:
           - entity: switch.hades
             icon: mdi:desktop-classic
         title: Wake on LAN
         show_header_toggle: false
-        
-      - type: entities
-        entities:
-          - input_boolean.testing
-  - icon: mdi:sofa
+
+#      - id: 2be24faf8d354507ae60bb0eeb5a49fd  # Automatically created id
+#        type: entities
+#        entities:
+#          - input_boolean.testing
+  - id: 1  # Automatically created id
+    icon: mdi:sofa
     background: radial-gradient(crimson, skyblue)
     title: Livingroom
     cards:
-      - type: custom:group-card
+      - id: 66deab68c74642b49ec6d2ad24bc6ee7  # Automatically created id
+        type: custom:group-card
         card:
           type: entities
           title: Lights
         group: group.livingroom_lights
-      - type: vertical-stack
+      - id: 24dedaa8f7954ca0b785b69af7a738db  # Automatically created id
+        type: vertical-stack
         cards:
           - type: history-graph
-            entities:
               - sensor.living_room_light
+            entities:
             hours_to_show: 24
           - type: history-graph
             entities:
@@ -83,17 +94,20 @@ views:
             entity: sensor.living_room_motion
             name: Motion
             accuracy: 24
-          
-  - icon: mdi:hanger
+
+  - id: 2  # Automatically created id
+    icon: mdi:hanger
     background: radial-gradient(crimson, skyblue)
     title: Hallway
     cards:
-      - type: custom:group-card
+      - id: 10659dff68d7451d9056732335ecf9cb  # Automatically created id
+        type: custom:group-card
         card:
           type: entities
           title: Lights
         group: group.hallway_lights
-      - type: vertical-stack
+      - id: 9efe6b505d0d474a9d3b840daf61939a  # Automatically created id
+        type: vertical-stack
         cards:
           - type: history-graph
             entities:
@@ -107,62 +121,73 @@ views:
             entity: sensor.hallway_motion
             name: Motion
             accuracy: 24
-  
-  - icon: mdi:fridge
+
+  - id: 3  # Automatically created id
+    icon: mdi:fridge
     background: radial-gradient(crimson, skyblue)
     title: Living Room
     cards:
-      - type: entities
+      - id: c4a4a06c0d284054912096169ca50da9  # Automatically created id
+        type: entities
         entities:
           - switch.kitchen_plug
-  
-  - icon: mdi:play-pause
+          # - sensor.kitchen_plug_amps
+          # - sensor.kitchen_plug_volts
+          # - sensor.kitchen_plug_watts
+          # - sensor.kitchen_plug_today_kwh
+          # - sensor.kitchen_plug_total_kwh
+
+  - id: 4  # Automatically created id
+    icon: mdi:play-pause
     background: radial-gradient(crimson, skyblue)
     title: Media
     cards:
-      - type: vertical-stack
+      - id: 3e1b543875364b20b86e896979dbec94  # Automatically created id
+        type: vertical-stack
         title: Spotify
         cards:
           - type: media-control
             entity: media_player.spotify
           - type: entities
             entities:
-            - input_select.spotify_playlist
-            - input_select.spotify_source
-            - script.spotify_music
-            - input_boolean.spotify_shuffle
-            - input_number.spotify_volume
-          
+              - input_select.spotify_playlist
+              - input_select.spotify_source
+              - script.spotify_music
+              - input_boolean.spotify_shuffle
+              - input_number.spotify_volume
+
       #- type: media-control
       #  entity: media_player.shield
-      - type: vertical-stack
+      - id: dd0b5d697dfa480bb9836c76aabed5ce  # Automatically created id
+        type: vertical-stack
         cards:
-        - type: entities
-          title: Media Supervising
-          entities:
-          - entity: sensor.sonarr_series
-            name: Sonarr
-          - entity: sensor.radarr_movies
-            name: Radarr
-          - entity: sensor.sonarr_wanted
-            name: Wanted
-          - entity: sensor.sonarr_upcoming
-            name: Upcoming
-          - entity: sensor.radarr_upcoming
-            name: Upcoming
-          - entity: sensor.sonarr_queue
-            name: Queue
+          - type: entities
+            title: Media Supervising
+            entities:
+              - entity: sensor.sonarr_series
+                name: Sonarr
+              - entity: sensor.radarr_movies
+                name: Radarr
+              - entity: sensor.sonarr_wanted
+                name: Wanted
+              - entity: sensor.sonarr_upcoming
+                name: Upcoming
+              - entity: sensor.radarr_upcoming
+                name: Upcoming
+              - entity: sensor.sonarr_queue
+                name: Queue
           # - entity: sensor.deluge_status
             # name: Status
-        - type: history-graph
-          entities:
-            - entity: sensor.deluge_down_speed
-              name: Down
-            - entity: sensor.deluge_up_speed
-              name: Up
-          hours_to_show: 24
-               
-  - icon: mdi:temperature-celsius
+          - type: history-graph
+            entities:
+              - entity: sensor.deluge_down_speed
+                name: Down
+              - entity: sensor.deluge_up_speed
+                name: Up
+            hours_to_show: 24
+
+  - id: 5  # Automatically created id
+    icon: mdi:temperature-celsius
     background: radial-gradient(crimson, skyblue)
     title: Temperature
     panel: false
@@ -186,16 +211,17 @@ views:
       # - type: 'custom:weather-card'
         # entity_weather: weather.yweather
         # entity_sun: sun.sun
-        
-    - type: vertical-stack
-      cards:
-      - type: markdown
-        content: >
-          <h2><center>SMHI
-      - type: 'custom:weather-card'
-        entity_weather: weather.smhi_linköping
-        entity_sun: sun.sun
-  
+      - id: 1a790fc6e5c042e3aae38776548272de  # Automatically created id
+        type: vertical-stack
+        cards:
+          - type: markdown
+            content: >
+              <h2><center>SMHI
+          - type: 'custom:weather-card-chart'
+            weather: weather.smhi_linkoping
+            title: Linköping
+            sun: sun.sun
+
     # - type: vertical-stack
       # cards:
       # - type: markdown
@@ -222,17 +248,19 @@ views:
           # name: Dewpoint
         # - sun.sun
         # column_width: 33%
-      - type: picture
-        image: https://www.yr.no/sted/Sverige/%C3%96sterg%C3%B6tland/Link%C3%B6ping/meteogram.svg
-      
-      
-          
-  - icon: mdi:lan
+          #- type: picture
+           # image: https://www.yr.no/sted/Sverige/%C3%96sterg%C3%B6tland/Link%C3%B6ping/meteogram.svg
+
+
+
+  - id: 6  # Automatically created id
+    icon: mdi:lan
     background: radial-gradient(crimson, skyblue)
     title: Server info
     cards:
       #Netdata
-      - type: vertical-stack
+      - id: 7b90f3f63a674c9883588e41042da35d  # Automatically created id
+        type: vertical-stack
         cards:
           - type: markdown
             content: >
@@ -254,7 +282,7 @@ views:
               - entity: sensor.netdata_cachedram
                 name: Cashed
           - type: entities
-            title: Free Disk Space 
+            title: Free Disk Space
             entities:
               - entity: sensor.netdata_boot
                 name: Boot
@@ -262,9 +290,10 @@ views:
                 name: Media
               - entity: sensor.netdata_cloud
                 name: Cloud
-          
+
       #Internet stuff
-      - type: vertical-stack
+      - id: af24b6853bce48ae937356c8500ca20f  # Automatically created id
+        type: vertical-stack
         cards:
           - type: sensor
             entity: sensor.rtac1200g_kbytesec_received
@@ -278,54 +307,56 @@ views:
             image: /local/lovelace/Home/isp_4.png
             #title: Internet
             elements:
-            - type: state-icon
-              entity: sensor.speedtest_ping
-              style:
-                top: 85%
-                left: 25%
-                
-            - type: state-label 
-              entity: sensor.speedtest_ping
-              prefix: "Speedtest : " 
-              style:
-                top: 93%
-                left: 20%
-                font-size: 115%
-                font-weight: bold
-                
-            - type: state-icon
-              entity: sensor.speedtest_download
-              style:
-                top: 85%
-                left: 50%
-                
-            - type: state-label 
-              entity: sensor.speedtest_download
-              style:
-                top: 93%
-                left: 50%
-                font-size: 115%
-                font-weight: bold
-                
-            - type: state-icon
-              entity: sensor.speedtest_upload
-              style:
-                top: 85%
-                left: 75%
-               
-            - type: state-label 
-              entity: sensor.speedtest_upload
-              style:
-                top: 93%
-                left: 75%
-                font-size: 115%
-                font-weight: bold
-         
-  - icon: mdi:rocket
+              - type: state-icon
+                entity: sensor.speedtest_ping
+                style:
+                  top: 85%
+                  left: 25%
+
+              - type: state-label
+                entity: sensor.speedtest_ping
+                prefix: "Speedtest : "
+                style:
+                  top: 93%
+                  left: 20%
+                  font-size: 115%
+                  font-weight: bold
+
+              - type: state-icon
+                entity: sensor.speedtest_download
+                style:
+                  top: 85%
+                  left: 50%
+
+              - type: state-label
+                entity: sensor.speedtest_download
+                style:
+                  top: 93%
+                  left: 50%
+                  font-size: 115%
+                  font-weight: bold
+
+              - type: state-icon
+                entity: sensor.speedtest_upload
+                style:
+                  top: 85%
+                  left: 75%
+
+              - type: state-label
+                entity: sensor.speedtest_upload
+                style:
+                  top: 93%
+                  left: 75%
+                  font-size: 115%
+                  font-weight: bold
+
+  - id: 7  # Automatically created id
+    icon: mdi:rocket
     background: radial-gradient(crimson, skyblue)
     title: SpaceX
     cards:
-      - type: entities
+      - id: f93c58b5770b40cb9fa7e206dc3aa9de  # Automatically created id
+        type: entities
         title: SpaceX
         entities:
           - sensor.starman_speed
@@ -336,37 +367,47 @@ views:
           - sensor.spacex_next_launch_time
           - sensor.spacex_next_launch_site
           - automation.rocket_launch
-  
-  - title: SMHI
+
+  - id: 8  # Automatically created id
+    title: SMHI
     cards:
-      - type: vertical-stack
+      - id: fbc688989364421593287ccbccf13bed  # Automatically created id
+        type: vertical-stack
         cards:
-        - type: markdown
-          content: >
+          - type: markdown
+            content: >
               <center><h1> SMHI - Season and temp last 30 days </h1></center>
-        - type: entities
-          entities:
-          - entity: sensor.season_checker
-            name: Current season
-          - input_datetime.season_date
-          - entity: sensor.season_days
-            name: Days since season changed
-            icon: mdi:calendar
-          - entity: sensor.mean_temp
-            name: Yesterday's meantemperature
-            icon: mdi:thermometer
-        - type: history-graph
-          entities:
-            - sensor.mean_temp
-          hours_to_show: 720
-  - title: Automatron
+          - type: entities
+            entities:
+              - entity: sensor.season_checker
+                name: Current season
+              - input_datetime.season_date
+              - entity: sensor.season_days
+                name: Days since season changed
+                icon: mdi:calendar
+              - entity: sensor.mean_temp
+                name: Yesterday's meantemperature
+                icon: mdi:thermometer
+          - type: history-graph
+            entities:
+              - sensor.mean_temp
+            hours_to_show: 7200
+            title: "365 days"
+          - type: history-graph
+            entities:
+              - sensor.mean_temp
+            hours_to_show: 168
+            title: "7 days"
+  - id: 9  # Automatically created id
+    title: Automatron
     cards:
-      - type: custom:group-card
+      - id: d7468ca973b0416f981bd2a5e214c359  # Automatically created id
+        type: custom:group-card
         card:
           type: entities
           title: All automations
         group: group.all_automations
-  
-  
-        
-        
+
+
+
+

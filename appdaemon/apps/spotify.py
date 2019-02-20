@@ -100,8 +100,8 @@ class StopPlay(hass.Hass):
 
   def initialize(self):
     #self.log("Started")
-    self.listen_state(self.came_home, "device_tracker.zeus_router", new = "home")
-    self.listen_state(self.left, "device_tracker.zeus_router", new = "not_home")
+    self.listen_state(self.came_home, "device_tracker.oneplus_6t", new = "home")
+    self.listen_state(self.left, "device_tracker.oneplus_6t", new = "not_home")
     
   def left(self, entity, attribute, old, new, kwargs):
     if self.get_state("sensor.spotify_source") == "HADES" or self.get_state("sensor.spotify_source") == "Ares":

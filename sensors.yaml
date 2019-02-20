@@ -14,24 +14,55 @@
       - mediumClouds
       - highClouds
       - dewpointTemperature
-- platform: file
-  file_path: /scripts/misc/data/season.txt
-  name: Season_checker
+# - platform: file
+  # file_path: /scripts/misc/data/season.txt
+  #name: Season_checker
 - platform: file
   name: Mean Temp
   file_path: /etc/avdagic.net/smhi_temp.json
   value_template: "{{ value_json.temp | float }}"
+  unit_of_measurement: °C
 - platform: file
   name: Mean Temp Day
   file_path: /etc/avdagic.net/smhi_temp.json
   value_template: "{{ value_json.date }}"
   #value_template: "{{ strptime(value_json.date,'%Y-%m-%d') - strptime(states('input_datetime.season_date'),'%Y-%m-%d') }}"
   unit_of_measurement: days
+- platform: file
+  name: Season_checker
+  file_path: /scripts/misc/data/season.txt
+  value_template: "{{ value_json.season }}"
+# - platform: file
+  # name: Season_checker
+  # file_path: /scripts/misc/data/season.txt
+  # value_template: "{{ value_json.season }}"
+  
 - platform: template
   sensors:
     season_days:
       unit_of_measurement: days
       value_template: "{{ strptime(states('sensor.mean_temp_day'),'%Y-%m-%d').toordinal() - strptime(states('input_datetime.season_date'),'%Y-%m-%d').toordinal() }}"
+    # kitchen_plug_amps:
+      # friendly_name_template: "{{ states.switch.kitchen_plug.name}} Current"
+      # value_template: '{{ states.switch.kitchen_plug.attributes["current_a"] | float }}'
+      # unit_of_measurement: 'A'
+    # kitchen_plug_watts:
+      # friendly_name_template: "{{ states.switch.kitchen_plug.name}} Current Consumption"
+      # value_template: '{{ states.switch.kitchen_plug.attributes["current_power_w"] | float }}'
+      # unit_of_measurement: 'W'
+    # kitchen_plug_total_kwh:
+      # friendly_name_template: "{{ states.switch.kitchen_plug.name}} Total Consumption"
+      # value_template: '{{ states.switch.kitchen_plug.attributes["total_energy_kwh"] | float }}'
+      # unit_of_measurement: 'kWh'
+    # kitchen_plug_volts:
+      # friendly_name_template: "{{ states.switch.kitchen_plug.name}} Voltage"
+      # value_template: '{{ states.switch.kitchen_plug.attributes["voltage"] | float }}'
+      # unit_of_measurement: 'V'
+    # kitchen_plug_today_kwh:
+      # friendly_name_template: "{{ states.switch.kitchen_plug.name}} Today's Consumption"
+      # value_template: '{{ states.switch.kitchen_plug.attributes["today_energy_kwh"] | float }}'
+      # unit_of_measurement: 'kWh'
+
 # - platform: template
   # sensors:
     # season_date:
@@ -237,6 +268,10 @@
       value_template: '{{ states.sensor.spacex.attributes["mission_name"] }}'
 
 
+- platform: tautulli
+  api_key: !secret plexpy
+  host: 192.168.5.2      
+      
 - platform: sonarr
   api_key: !secret sonarr
   monitored_conditions:
@@ -259,3 +294,8 @@
     - 'current_status'
     - 'download_speed'
     - 'upload_speed'
+    
+    
+- platform: seventeentrack
+  username: !secret 17track_user
+  password: !secret 17track_pass

@@ -29,7 +29,9 @@ zone: !include zones.yaml
 device_tracker: !include device_tracker.yaml
 frontend: !include frontend.yaml
 
-
+lovelace:
+  mode: yaml
+  
 #Add IFTTT functionality
 ifttt:
   key: !secret ifttt_key
@@ -52,7 +54,8 @@ config:
 #Config for HA SSL and password
 http:
   api_password: !secret http_password
-  base_url: https://192.168.5.2:8123
+  #base_url: http://192.168.5.2:8123
+  base_url: https://hass.avdagic.net
 
 # Checks for available updates
 updater:
@@ -62,11 +65,21 @@ discovery:
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
+custom_updater:
+  card_urls:
+    - https://raw.githubusercontent.com/sgttrs/lovelace-weather-card-chart/master/custom-updater.json
+
 # Enables support for tracking state changes over time
 history:
 
 # View all events in a logbook
 logbook:
+
+asuswrt:
+  host: 192.168.5.1
+  username: !secret router_user
+  password: !secret router_pass
+  #track_new_devices: false
 
 weather:
   - platform: yweather
@@ -84,8 +97,8 @@ input_boolean:
   sleeping:
     name: True if sleeping
     initial: off
-  testing:
-    name: Test
+  plex:
+    name: Plex on Ares
     initial: off
 
 # Track the sun
@@ -157,6 +170,9 @@ notify:
   - name: Pushbullet
     platform: pushbullet
     api_key: !secret pushbullet_api
+  - name: matrix
+    platform: matrix
+    default_room: "#hass-testing:avdagic.net"
 #  - name: Push
 #    platform: html5
 #    gcm_api_key: !secret gcm_api_key
@@ -218,4 +234,9 @@ camera:
 #    name: Hallway
 #    mjpeg_url: http://rollei:rolleipw@192.168.5.92/videostream.cgi?user=rollei&pwd=rolleipw&resolution=32&rate=0 
 
-
+matrix:
+  homeserver: https://avdagic.net
+  username: "@hass:avdagic.net"
+  password: !secret matrix_pw
+  rooms:
+    - "#hass-testing:avdagic.net"

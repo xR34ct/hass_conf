@@ -35,27 +35,25 @@
 - id: '1521562752133'
   alias: Movie Time
   trigger:
-  - entity_id: sensor.plex_sensor
-    platform: state
-    to: Playing
+  - platform: webhook
+    webhook_id: plex_playing_on_ares
   action:
   - data:
       entity_id: light.living_room
     service: light.turn_off
+  - data:
+      entity_id: input_boolean.plex
+    service: input_boolean.turn_on
 - id: '1521580166378'
   alias: Movie Paused/Stopped
   trigger:
-  - entity_id: sensor.plex_sensor
-    from: Playing
-    platform: state
-  condition:
-  - below: '5000'
-    condition: numeric_state
-    entity_id: sensor.living_room_light
+  - platform: webhook
+    webhook_id: plex_not_playing_on_ares
+  condition: []
   action:
   - data:
-      entity_id: light.living_room
-    service: light.turn_on
+      entity_id: input_boolean.plex
+    service: input_boolean.turn_off
 - action:
   - data:
       entity_id: light.living_room
@@ -126,7 +124,22 @@
     to: 'on'
   condition: []
   action:
-  - delay: '300'
+  - delay: '1200'
   - data:
       entity_id: switch.kitchen_plug
     service: switch.turn_off
+- id: '1550503526651'
+  alias: Turn on light if movie paused/stopped
+  trigger:
+  - entity_id: input_boolean.plex
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - below: '5000'
+    condition: numeric_state
+    entity_id: sensor.living_room_light
+  action:
+  - data:
+      entity_id: ' light.living_room'
+    service: light.turn_on

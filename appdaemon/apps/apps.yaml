@@ -1,7 +1,7 @@
 update:
   module: new_hass
   class: HassUpdate
-livingroom_day:
+livingroom:
   module: motion
   class: Motion
   sensor: sensor.living_room_motion
@@ -14,7 +14,7 @@ livingroom_day:
   day_dim_brightness_pct: 30
   night_brightness_pct: 45
   night_dim_brightness_pct: 15
-hallway_day:
+hallway:
   module: motion
   class: Motion
   sensor: sensor.hallway_motion

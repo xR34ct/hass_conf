@@ -26,26 +26,30 @@ class Motion(hass.Hass):
       self.handle = None
     
   def motion_on(self, entity, attribute, old, new, kwargs):
-    if self.get_state("device_tracker.zeus_router") != "home":
-        self.log("Nobody home, waiting 10 sec")
-        time.sleep(15)
-        if self.get_state("device_tracker.zeus_router") != "home":
-            self.log("Still nobody home, alerting")
-            self.call_service("notify/pushbullet", target = "channel/anethass", title = "Home Assistant", message = "Movement at home")
-            self.call_service("light/turn_on", entity_id = "light.living_room", flash = "long")
-            self.call_service("light/turn_on", entity_id = "light.hallway", flash = "long")
-    if self.get_state("device_tracker.zeus_router") == "home":
-        self.log("Someone is home")
-        if self.args["entity_id"] == "light.living_room":
-            if self.get_state("sensor.plex_sensor") != "Playing":
-                self.log("Good Ares is not playing plex")
-                if int(self.get_state("sensor.living_room_light")) <= 7500:
-                    self.light_on(self, self.args["entity_id"])
-        else:
-            self.light_on(self, self.args["entity_id"])
+    if self.get_state(entity="device_tracker.oneplus_6t") != "home":
+        self.log("Nobody home, alerting")
+        #self.log(self.get_state(entity="device_tracker.poseidon"))
+        self.call_service("notify/pushbullet", target = "channel/anethass", title = "Home Assistant", message = "Movement at home")
+        # time.sleep(15)
+        # if self.get_state("device_tracker.oneplus_6t") != "home":
+            # self.log("Still nobody home, alerting")
+            # self.call_service("notify/pushbullet", target = "channel/anethass", title = "Home Assistant", message = "Movement at home")
+            # self.call_service("light/turn_on", entity_id = "light.living_room", flash = "long")
+            # self.call_service("light/turn_on", entity_id = "light.hallway", flash = "long")
+    # if self.get_state("device_tracker.oneplus_6t") == "home":
+    #self.log(entity_id)
+    #self.args["entity_id"]
+    if entity == "sensor.living_room_motion":
+#        self.log("Test")
+        if self.get_state("input_boolean.plex") != "on":
+            self.log("Good Ares is not playing plex")
+            if int(self.get_state("sensor.living_room_light")) <= 7500:
+                self.light_on(self, self.args["entity_id"])
+    else:
+        self.light_on(self, self.args["entity_id"])
   
   def light_on(self, entity, attribute):
-        self.log(self.args["entity_id"] + " turned on because motion was detected and Zeus is home")
+        self.log(self.args["entity_id"] + " turned on because motion was detected")
         if self.get_state("input_boolean.sleeping") != "on":
             self.turn_on(self.args["entity_id"], brightness_pct = int(self.args["day_brightness_pct"]))
         else:
