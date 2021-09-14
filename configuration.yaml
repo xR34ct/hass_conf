@@ -29,6 +29,10 @@ zone: !include zones.yaml
 device_tracker: !include device_tracker.yaml
 frontend: !include frontend.yaml
 
+system_health:
+#mobile_app:
+person:
+
 lovelace:
   mode: yaml
   
@@ -52,10 +56,10 @@ map:
 config:
 
 #Config for HA SSL and password
-http:
-  api_password: !secret http_password
-  #base_url: http://192.168.5.2:8123
-  base_url: https://hass.avdagic.net
+# http:
+#   #api_password: !secret http_password
+#   #base_url: http://192.168.5.2:8123
+#   base_url: https://hass.avdagic.net
 
 # Checks for available updates
 updater:
@@ -65,9 +69,9 @@ discovery:
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-custom_updater:
-  card_urls:
-    - https://raw.githubusercontent.com/sgttrs/lovelace-weather-card-chart/master/custom-updater.json
+# custom_updater:
+#   card_urls:
+#     - https://raw.githubusercontent.com/sgttrs/lovelace-weather-card-chart/master/custom-updater.json
 
 # Enables support for tracking state changes over time
 history:
@@ -82,8 +86,16 @@ asuswrt:
   #track_new_devices: false
 
 weather:
-  - platform: yweather
-    woeid: 897380
+#  - platform: yweather
+#    woeid: 897380
+  - platform: openweathermap
+    api_key: !secret openweathermap
+    mode: hourly
+    name: hourly_owm
+  - platform: openweathermap
+    api_key: !secret openweathermap
+    mode: freedaily
+    name: daily_owm
 
 input_boolean:
   weather:
@@ -97,8 +109,14 @@ input_boolean:
   sleeping:
     name: True if sleeping
     initial: off
+  streaming:
+    name: Streaming
+    initial: off
   plex:
     name: Plex on Ares
+    initial: off
+  hjuul:
+    name: RGB Hjuul
     initial: off
 
 # Track the sun
@@ -106,7 +124,8 @@ sun:
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
 
 #Sliders and input boxes
 input_number:
@@ -150,13 +169,13 @@ media_player:
     scan_interval: 5
     client_id: !secret spotify_id
     client_secret: !secret spotify_secret
-    cashe_path: /home/homeassistant/.homeassistant/.spotify-token-cashe
+#    cashe_path: /home/homeassistant/.homeassistant/.spotify-token-cashe
 
   - platform: plex
     entity_namespace: 'plex'
 #    include_non_clients: true
     scan_interval: 1
-    show_all_controls: true
+#    show_all_controls: true
 #    use_custom_entity_ids: false
 #    use_episode_art: true
 
@@ -170,9 +189,9 @@ notify:
   - name: Pushbullet
     platform: pushbullet
     api_key: !secret pushbullet_api
-  - name: matrix
-    platform: matrix
-    default_room: "#hass-testing:avdagic.net"
+#  - name: matrix
+#    platform: matrix
+#    default_room: "#hass-testing:avdagic.net"
 #  - name: Push
 #    platform: html5
 #    gcm_api_key: !secret gcm_api_key
@@ -184,17 +203,17 @@ notify:
 
 wake_on_lan:
 
-switch:
-  #WoL
-  - platform: wake_on_lan
-    mac_address: !secret hades-mac
-    host: Hades
-    name: "Hades"
-    turn_off: 
-      service: shell_command.turn_off_hades
+# switch:
+#   #WoL
+#   - platform: wake_on_lan
+#     mac_address: !secret hades-mac
+#     host: Hades
+#     name: "Hades"
+#     turn_off: 
+#       service: shell_command.turn_off_hades
       
-  - platform: tplink
-    host: 192.168.5.184
+#  - platform: tplink
+#    host: 192.168.5.184
     
   
 
@@ -234,9 +253,25 @@ camera:
 #    name: Hallway
 #    mjpeg_url: http://rollei:rolleipw@192.168.5.92/videostream.cgi?user=rollei&pwd=rolleipw&resolution=32&rate=0 
 
-matrix:
-  homeserver: https://avdagic.net
-  username: "@hass:avdagic.net"
-  password: !secret matrix_pw
-  rooms:
-    - "#hass-testing:avdagic.net"
+#matrix:
+#  homeserver: https://avdagic.net
+#  username: "@hass:avdagic.net"
+#  password: !secret matrix_pw
+#  rooms:
+#    - "#hass-testing:avdagic.net"
+#transmission:
+#  host: 192.168.5.2
+#  username: !secret transmission_user
+#  password: !secret transmission_pass
+#  scan_interval: 30
+#  monitored_conditions:
+#    - current_status
+#    - download_speed
+#    - upload_speed
+#    - active_torrents
+#    - paused_torrents
+#    - total_torrents
+#    - started_torrents
+#    - completed_torrents
+  
+speedtestdotnet:

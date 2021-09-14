@@ -42,20 +42,6 @@ sensor.yr_high_clouds:
   friendly_name: High Clouds
 sensor.yr_dewpoint_temperatur:
   friendly_name: Dewpoint
-sensor.netdata_4k__hdr:
-  friendly_name: 4K & HDR
-sensor.netdata_boot_drive:
-  friendly_name: Boot
-sensor.netdata_free_ram:
-  friendly_name: Free RAM
-sensor.netdata_iowait:
-  friendly_name: IOWait
-sensor.netdata_load_15:
-  friendly_name: Load 15
-sensor.netdata_server:
-  friendly_name: Cloud
-sensor.netdata_cpu:
-  unit_of_measurement: '% cpu'
 sensor.temp:
   icon: mdi:thermometer
 sensor.season_checker:
@@ -68,3 +54,5 @@ device_tracker.zeus:
   icon: mdi:phone
 input_boolean.sleeping:
   friendly_name: Sleeping
+switch.flakt:
+  friendly_name: Coffee

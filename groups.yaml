@@ -52,21 +52,19 @@ outside_weather:
   - sensor.yr_dewpoint_temperature
   - sun.sun
   - sensor.season
-forecast:
-  name: Weather Forecast
-  view: no
-  entities:
-      - input_boolean.weather
-netdata:
-  name: "Netdata Poseidon"
-  entities:
-  - sensor.netdata_4k__hdr
-  - sensor.netdata_boot_drive
-  - sensor.netdata_server
-  - sensor.netdata_iowait_
-  - sensor.netdata_load_15
-  - sensor.netdata_free_ram
-#- sensor.netdata_cpu_iowait
+# forecast:
+#   name: Weather Forecast
+#   view: no
+#   entities:
+#       - input_boolean.weather
+#netdata:
+#  name: "Netdata Poseidon"
+#  entities:
+#  - sensor.netdata_boot_drive
+#  - sensor.netdata_server
+#  - sensor.netdata_load_15
+#  - sensor.netdata_free_ram
+##- sensor.netdata_cpu_iowait
 #  - sensor.netdata_cpu_system
 #  - sensor.netdata_cpu_user
 #  - sensor.netdata_disk_free
@@ -88,60 +86,60 @@ hallway_lights:
   entities:
   - light.hue_white_lamp_1
 
-#Views
-default_view:
-  name: Dionysos
-  view: yes
-  icon: mdi:home
-  entities:
-    - sensor.current_version
-    - sensor.anet
-    - sensor.uptime
-    - group.speedtest
-    - updater.updater
-#   - sensor.hallway_temperature
-#   - sensor.hallway_light
-media_view:
-  name: Media
-  view: yes
-  entities:
-    - group.music_spotify
-    - group.media_players
-    - sensor.plex
-temp_view:
-  name: "Temperature & Humidity"
-  view: yes
-  entities:
-    - group.outside_weather
-    - camera.yr
-    - group.forecast
-tracker_view:
-  name: Tracking
-  view: yes
-  entities:
-    - group.all_devices
-    - switch.hades
-    - group.netdata
-    - camera.hallway
-#lights_view:
-#  name: Lights
-#  view: yes
-#  entities:
-#    - group.livingroom_lights
-#    - group.hallway_lights
-livingroom_view:
-  name: "Living Room"
-  view: yes
-  entities:
-    - group.living_room_stuff
-Hallway_view:
-  name: "Hallway"
-  view: yes
-  entities:
-    - group.hallway_stuff
-automations_view:
-  name: Automatron
-  view: yes
-  entities:
-    - group.all_automations
-    - switch.alarm
+# #Views
+# default_view:
+#   name: Dionysos
+#   view: yes
+#   icon: mdi:home
+#   entities:
+#     - sensor.current_version
+#     - sensor.anet
+#     - sensor.uptime
+#     - group.speedtest
+#     - updater.updater
+# #   - sensor.hallway_temperature
+# #   - sensor.hallway_light
+# media_view:
+#   name: Media
+#   view: yes
+#   entities:
+#     - group.music_spotify
+#     - group.media_players
+#     - sensor.plex
+# temp_view:
+#   name: "Temperature & Humidity"
+#   view: yes
+#   entities:
+#     - group.outside_weather
+#     - camera.yr
+#     - group.forecast
+# tracker_view:
+#   name: Tracking
+#   view: yes
+#   entities:
+#     - group.all_devices
+#     - switch.hades
+#     #- group.netdata
+#     - camera.hallway
+# #lights_view:
+# #  name: Lights
+# #  view: yes
+# #  entities:
+# #    - group.livingroom_lights
+# #    - group.hallway_lights
+# livingroom_view:
+# name: "Living Room"
+# view: yes
+# entities:
+#   - group.living_room_stuff
+# Hallway_view:
+# name: "Hallway"
+# view: yes
+# entities:
+#   - group.hallway_stuff
+# automations_view:
+# name: Automatron
+# view: yes
+# entities:
+#   - group.all_automations
+#   - switch.alarm

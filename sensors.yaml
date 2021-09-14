@@ -1,19 +1,19 @@
 # Weather prediction
-- platform: yr
-  monitored_conditions:
-      - temperature
-      - symbol
-      - precipitation
-      - windSpeed
-      - pressure
-      - windDirection
-      - humidity
-      - fog
-      - cloudiness
-      - lowClouds
-      - mediumClouds
-      - highClouds
-      - dewpointTemperature
+# - platform: yr
+#   monitored_conditions:
+#       - temperature
+#       - symbol
+#       - precipitation
+#       - windSpeed
+#       - pressure
+#       - windDirection
+#       - humidity
+#       - fog
+#       - cloudiness
+#       - lowClouds
+#       - mediumClouds
+#       - highClouds
+#       - dewpointTemperature
 # - platform: file
   # file_path: /scripts/misc/data/season.txt
   #name: Season_checker
@@ -76,9 +76,9 @@
   
 
 #Check remaining dayts on certificate
-- platform: cert_expiry
-  host: avdagic.net
-  name: ANet
+# - platform: cert_expiry
+#   host: avdagic.net
+#   name: ANet
 
 # Plex Activiy
 #- platform: plex
@@ -93,39 +93,39 @@
 - platform: uptime
 
 #Speed
-- platform: speedtest
-  monitored_conditions:
-    - ping
-    - download
-    - upload
+#- platform: speedtest
+#  monitored_conditions:
+#    - ping
+#    - download
+#    - upload
 
 #Netdata
-- platform: netdata
-  resources:
-    load15:
-      data_group: system.load
-      element: load15
-    cpu:
-      data_group: system.cpu
-      element: system
-    freeram:
-      data_group: system.ram
-      element: free
-    usedram:
-      data_group: system.ram
-      element: used
-    cachedram:
-      data_group: system.ram
-      element: cached
-    Boot:
-      data_group: disk_space._
-      element: avail
-    Media:
-      data_group: disk_space._media_plex
-      element: avail
-    Cloud:
-      data_group: disk_space._media_srv
-      element: avail
+#- platform: netdata
+#  resources:
+#    load15:
+#      data_group: system.load
+#      element: load15
+#    cpu:
+#      data_group: system.cpu
+#      element: system
+#    freeram:
+#      data_group: system.ram
+#      element: free
+#    usedram:
+#      data_group: system.ram
+#      element: used
+#    cachedram:
+#      data_group: system.ram
+#      element: cached
+#    Boot:
+#      data_group: disk_space._
+#      element: avail
+#    Media:
+#      data_group: disk_space._media_plex
+#      element: avail
+#    Cloud:
+#      data_group: disk_space._media_srv
+#      element: avail
 #    "System CPU":
 #      data_group: system.cpu
 #      element: system
@@ -148,11 +148,10 @@
 #      name: "Boot Drive"
 #    disk_space._media_4khdr:
 #      element: avail
-#      name: "4K & HDR"
+#      name: "4KHDR"
 #    disk_space._media_srv:
 #      element: avail
 #      name: "Server"
-
 #    - memory_free
 #    - memory_used
 #    - system_load
@@ -163,34 +162,34 @@
 
 #Hue
 - platform: rest
-  resource: !secret hallway_temp
-  value_template: '{{ value_json.state.temperature | float / 100 }}'
-  unit_of_measurement: °C
-  name: 'Hallway Temperature'
-- platform: rest
-  resource: !secret hallway_lux
-  value_template: '{{ value_json.state.lightlevel }}'
-  unit_of_measurement: Lux
-  name: 'Hallway Light'
-- platform: rest
-  resource: !secret hallway_motion
-  value_template: '{{ value_json.state.status }}'
-  name: 'Hallway Motion'
-  scan_interval: 0.1
-- platform: rest
-  resource: !secret livingroom_temp
+  resource: !secret living_room_temp
   value_template: '{{ value_json.state.temperature | float / 100 }}'
   unit_of_measurement: °C
   name: 'Living Room Temperature'
 - platform: rest
-  resource: !secret livingroom_lux
+  resource: !secret living_room_lux
   value_template: '{{ value_json.state.lightlevel }}'
   unit_of_measurement: Lux
   name: 'Living Room Light'
 - platform: rest
-  resource: !secret livingroom_motion
-  value_template: '{{ value_json.state.status }}'
+  resource: !secret living_room_motion
+  value_template: '{{ value_json.state.presence }}'
   name: 'Living Room Motion'
+  scan_interval: 0.1
+- platform: rest
+  resource: !secret hallway_temp
+  value_template: '{{ value_json.state.temperature | float / 100 }}'
+  unit_of_measurement: °C
+  name: 'Bed Room Temperature'
+- platform: rest
+  resource: !secret hallway_lux
+  value_template: '{{ value_json.state.lightlevel }}'
+  unit_of_measurement: Lux
+  name: 'Bed Room Light'
+- platform: rest
+  resource: !secret hallway_motion
+  value_template: '{{ value_json.state.presence }}'
+  name: 'Bed Room Motion'
   scan_interval: 0.1
   
 #Spotify
@@ -224,48 +223,48 @@
 
 #SpaceX
 #Starman
-- platform: rest
-  name: Starman
-  json_attributes:
-    - earth_distance_km
-  value_template: '{{ value_json["speed_kph"] }}'
-  unit_of_measurement: "km/h"
-  resource: 'https://api.spacexdata.com/v2/info/roadster'
+#- platform: rest
+#  name: Starman
+#  json_attributes:
+#    - earth_distance_km
+#  value_template: '{{ value_json["speed_kph"] }}'
+#  unit_of_measurement: "km/h"
+#  resource: 'https://api.spacexdata.com/v2/info/roadster'
 #Next Rocket Launch
-- platform: rest
-  name: SpaceX
-  json_attributes:
-    - mission_name
-    - launch_site
-    - rocket
-  value_template: '{{ value_json["launch_date_unix"] }}'
-  resource: 'https://api.spacexdata.com/v2/launches/next'
+#- platform: rest
+#  name: SpaceX
+#  json_attributes:
+#    - mission_name
+#    - launch_site
+#    - rocket
+#  value_template: '{{ value_json["launch_date_unix"] }}'
+#  resource: 'https://api.spacexdata.com/v2/launches/next'
 #Sensors
-- platform: template
-  sensors:
-    starman_speed:
-      friendly_name: 'Starman Speed'
-      value_template: '{{ states.sensor.starman.state | round(0) }}'
-      unit_of_measurement: 'km/h'
-    starman_earth_distance:
-      friendly_name: 'Starman Earthdistance'
-      value_template: '{{ (states.sensor.starman.attributes["earth_distance_km"] | multiply(0.000001)) | round(2) }}'
-      unit_of_measurement: 'km x10⁶'
-    spacex_next_launch_day:
-      friendly_name: 'Date'
-      value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%d/%m %Y")}}'
-    spacex_next_launch_time:
-      friendly_name: 'Time'
-      value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%H:%M")}}'
-    spacex_next_rocket:
-      friendly_name: 'Rocket'
-      value_template: '{{ states.sensor.spacex.attributes["rocket"]["rocket_name"] }}'
-    spacex_next_launch_site:
-      friendly_name: 'Launchsite'
-      value_template: '{{ states.sensor.spacex.attributes["launch_site"]["site_name_long"] }}'
-    spacex_next_mission_name:
-      friendly_name: 'Mission'
-      value_template: '{{ states.sensor.spacex.attributes["mission_name"] }}'
+#- platform: template
+#  sensors:
+#    starman_speed:
+#      friendly_name: 'Starman Speed'
+#      value_template: '{{ states.sensor.starman.state | round(0) }}'
+#      unit_of_measurement: 'km/h'
+#    starman_earth_distance:
+#      friendly_name: 'Starman Earthdistance'
+#      value_template: '{{ (states.sensor.starman.attributes["earth_distance_km"] | multiply(0.000001)) | round(2) }}'
+#      unit_of_measurement: 'km x10⁶'
+#    spacex_next_launch_day:
+#      friendly_name: 'Date'
+#      value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%d/%m %Y")}}'
+#    spacex_next_launch_time:
+#      friendly_name: 'Time'
+#      value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%H:%M")}}'
+#    spacex_next_rocket:
+#      friendly_name: 'Rocket'
+#      value_template: '{{ states.sensor.spacex.attributes["rocket"]["rocket_name"] }}'
+#    spacex_next_launch_site:
+#      friendly_name: 'Launchsite'
+#      value_template: '{{ states.sensor.spacex.attributes["launch_site"]["site_name_long"] }}'
+#    spacex_next_mission_name:
+#      friendly_name: 'Mission'
+#      value_template: '{{ states.sensor.spacex.attributes["mission_name"] }}'
 
 
 - platform: tautulli
@@ -273,6 +272,7 @@
   host: 192.168.5.2      
       
 - platform: sonarr
+  host: 192.168.5.2
   api_key: !secret sonarr
   monitored_conditions:
     - upcoming
@@ -281,21 +281,51 @@
     - queue
   days: 1
 - platform: radarr
+  host: 192.168.5.2
   api_key: !secret radarr
   monitored_conditions:
     - upcoming
     - movies
   days: 7
-- platform: deluge
-  host: 192.168.5.2
-  username: !secret deluge_user
-  password: !secret deluge_pass
-  monitored_variables:
-    - 'current_status'
-    - 'download_speed'
-    - 'upload_speed'
+#- platform: deluge
+#  host: 192.168.5.2
+#  username: !secret deluge_user
+#  password: !secret deluge_pass
+#  monitored_variables:
+#    - 'current_status'
+#    - 'download_speed'
+#    - 'upload_speed'
+# - platform: transmission
+  # host: 192.168.5.2
+  # username: !secret transmission_user
+  # password: !secret transmission_pass
+  # scan_interval: 30
+  # monitored_conditions:
+    # - current_status
+    # - download_speed
+    # - upload_speed
+    # - active_torrents
+    # - paused_torrents
+    # - total_torrents
+    # - started_torrents
+    # - completed_torrents    
+
     
     
-- platform: seventeentrack
-  username: !secret 17track_user
-  password: !secret 17track_pass
+# - platform: seventeentrack
+#   username: !secret 17track_user
+#   password: !secret 17track_pass
+
+#- platform: pollenkoll
+#  sensors:
+#    - city: Norrkoping
+#      state: Al
+#      state: Alm
+#      state: Ambrosia
+#      state: Björk
+#      state: Bok
+#      state: Ek
+#      state: Gräs
+#      state: Gråbo
+#      state: Hassel
+#      state: Sälg

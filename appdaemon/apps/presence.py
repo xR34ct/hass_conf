@@ -8,7 +8,7 @@ class Presence_Detect(hass.Hass):
     
   def presence_changed(self, entity, attribute, old, new, kwargs):
     self.log(new)
-    if self.get_state("device_tracker.zeus_router") == "home":
-        self.log("Zeus came home")
+    if self.get_state("device_tracker.apollo") == "home":
+        self.log("Adnan came home")
     else:
-        self.log("Zeus left")
+        self.log("Adnan left")

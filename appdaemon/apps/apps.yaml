@@ -4,29 +4,33 @@ update:
 livingroom:
   module: motion
   class: Motion
-  sensor: sensor.living_room_motion
+  sensor: binary_sensor.living_room_sensor_motion
   entity_id: light.living_room
   # constrain_start_time: '07:00:00'
   # constrain_end_time: '22:59:59'
   delay: 900
   dim_delay: 300
-  day_brightness_pct: 80
-  day_dim_brightness_pct: 30
-  night_brightness_pct: 45
-  night_dim_brightness_pct: 15
+  day_color_temp: 447
+  day_brightness: 255
+  day_dim_brightness: 30
+  night_color_temp: 495
+  night_brightness: 1
+  night_dim_brightness: 1
 hallway:
-  module: motion
-  class: Motion
-  sensor: sensor.hallway_motion
-  entity_id: light.hallway
+ module: motion
+ class: Motion
+ sensor: binary_sensor.hallway_sensor_motion
+ entity_id: light.hallway
   # constrain_start_time: '07:00:00'
   # constrain_end_time: '22:59:59'
-  delay: 45
-  dim_delay: 15
-  day_brightness_pct: 80
-  day_dim_brightness_pct: 50
-  night_brightness_pct: 25
-  night_dim_brightness_pct: 25
+ delay: 45
+ dim_delay: 15
+ day_color_temp: 447
+ day_brightness: 255
+ day_dim_brightness: 30
+ night_color_temp: 495
+ night_brightness: 50
+ night_dim_brightness: 50
 # livingroom_night:
   # module: motion
   # class: Motion
@@ -73,3 +77,9 @@ got_home_play_else_pause:
 Presense_detection:
   module: presence
   class: Presence_Detect
+Stream_temp:
+  module: stream
+  class: stream_temp
+hjuul:
+  module: hjuul
+  class: Hjuul

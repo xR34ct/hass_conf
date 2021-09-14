@@ -12,17 +12,7 @@
     entity_id: input_boolean.alarmstatus
     state: 'on'
   action:
-  - data:
-      entity_id: switch.hades
-    service: switch.turn_on
-  - delay: '300'
-  - data:
-      entity_id: switch.kitchen_plug
-    service: switch.turn_on
   - service: script.spotify_alarm
-  - data:
-      entity_id: input_boolean.sleeping
-    service: input_boolean.turn_off
 - id: '1510513414834'
   alias: Hass Color
   trigger:
@@ -38,12 +28,14 @@
   - platform: webhook
     webhook_id: plex_playing_on_ares
   action:
-  - data:
-      entity_id: light.living_room
+  - data: {}
     service: light.turn_off
+    target:
+      area_id: 57fc0aad19fc42c0b787a9fc69de0d7c
   - data:
       entity_id: input_boolean.plex
     service: input_boolean.turn_on
+  mode: single
 - id: '1521580166378'
   alias: Movie Paused/Stopped
   trigger:
@@ -70,18 +62,14 @@
     platform: state
     to: 'on'
 - id: '1539475234169'
-  alias: 'Cold outside '
+  alias: Morning Stuff
   trigger:
-  - at: 08:00
+  - at: 07:00
     platform: time
-  condition:
-  - above: '0'
-    below: '10'
-    condition: numeric_state
-    entity_id: sensor.yr_temperature
+  condition: []
   action:
   - data:
-      message: Det kommer vara kallt idag!
+      message: '{{states(''sensor.season_checker'')}} and {{states(''sensor.yr_temperature'')}}'
       target:
       - channel/anethass
     service: notify.pushbullet
@@ -119,15 +107,17 @@
 - id: '1542146430171'
   alias: Tea off
   trigger:
-  - entity_id: switch.kitchen_plug
-    platform: state
+  - platform: state
+    entity_id: switch.flakt
+    from: 'off'
     to: 'on'
+    for: '900'
   condition: []
   action:
-  - delay: '1200'
   - data:
-      entity_id: switch.kitchen_plug
+      entity_id: switch.flakt
     service: switch.turn_off
+  mode: single
 - id: '1550503526651'
   alias: Turn on light if movie paused/stopped
   trigger:
@@ -140,6 +130,111 @@
     condition: numeric_state
     entity_id: sensor.living_room_light
   action:
+  - data: {}
+    service: light.turn_on
+    target:
+      area_id: 57fc0aad19fc42c0b787a9fc69de0d7c
+  mode: single
+- id: '1559662126741'
+  alias: Pungsvett
+  trigger:
+  - entity_id: device_tracker.oneplus_6t
+    platform: state
+    to: home
+  condition:
+  - above: '21.5'
+    condition: numeric_state
+    entity_id: sensor.living_room_temperature
+  action:
   - data:
-      entity_id: ' light.living_room'
+      entity_id: switch.kitchen_plug
+    service: switch.turn_on
+- id: '1570693945128'
+  alias: ANet Cert
+  description: ''
+  trigger:
+  - entity_id: sensor.anet
+    platform: state
+    to: '1'
+  condition: []
+  action:
+  - data:
+      message: Certificate is expiring
+    service: notify.pushbullet
+- id: '1583170491497'
+  alias: Streaming off
+  description: ''
+  trigger:
+  - entity_id: device_tracker.apollo
+    from: home
+    platform: state
+  condition:
+  - condition: state
+    entity_id: input_boolean.streaming
+    state: 'on'
+  action:
+  - data:
+      entity_id: input_boolean.streaming
+    service: input_boolean.turn_off
+- id: '1594925769079'
+  alias: Intruders
+  description: ''
+  trigger:
+  - entity_id: sensor.hallway_motion
+    from: '0'
+    platform: state
+    to: '1'
+  condition:
+  - condition: state
+    entity_id: device_tracker.apollo
+    state: not_home
+  action:
+  - data:
+      media_content_id: spotify:playlist:1nDx9nvAuW7WYiRxHaSZBS
+    service: spotify.play_playlist
+  - data:
+      entity_id: media_player.spotify
+      source: HADES
+    service: media_player.select_source
+- id: '1597361292566'
+  alias: Fläkt kväll
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - data:
+      entity_id: switch.kitchen_plug
+    service: switch.turn_on
+  - delay: '600'
+  - data:
+      entity_id: switch.kitchen_plug
+    service: switch.turn_off
+- id: '1607607235030'
+  alias: Grön RGB
+  description: ''
+  trigger:
+  - hours: '*'
+    minutes: '*'
+    platform: time_pattern
+    seconds: '1'
+  condition: []
+  action:
+  - delay: '1'
+  - data:
+      color_name: green
+      entity_id: light.extended_color_light_1
+    service: light.turn_on
+- id: '1607607428561'
+  alias: Röd RGB
+  description: ''
+  trigger:
+  - hours: '*'
+    minutes: '*'
+    platform: time_pattern
+    seconds: '3'
+  condition: []
+  action:
+  - data:
+      color_name: red
+      entity_id: light.extended_color_light_1
     service: light.turn_on
